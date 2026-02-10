@@ -1,0 +1,244 @@
+/* =========================
+   HERO (Defining / Service)
+   ========================= */
+
+.hero {
+  /* 헤더가 fixed라서 위쪽 여백 확보 */
+  --header-h: 72px;
+
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+
+  /* safe area 패딩 (데스크탑 기준) */
+  padding-top: calc(var(--header-h) + 28px);
+}
+
+/* 배경 이미지 영역 */
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero__bgImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transform: scale(1.02);
+}
+
+/* 컨텐츠 safe 영역 */
+.hero__inner {
+  position: relative;
+  z-index: 1;
+
+  /* 네가 헤더에서 쓰는 좌우 여백과 맞추기 */
+  padding: 0 160px 70px;
+  height: calc(100vh - var(--header-h));
+}
+
+/* 공통 타이틀 */
+.hero__title {
+  margin: 0;
+  font-weight: 700;
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  color: #f6efe6;
+  text-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+}
+
+/* Defining (좌상단) */
+.hero__title--defining {
+  position: absolute;
+  top: 12%;
+  left: 5%;
+
+  /* 반응형 폰트 */
+  font-size: clamp(55px, 9vw, 190px);
+}
+
+/* Service + Signature 그룹 (우하단) */
+.hero__serviceWrap {
+  position: absolute;
+  right: 160px;
+  bottom: 20%;
+
+  display: grid;
+  justify-items: end;
+  gap: 10px;
+}
+
+/* Service 폰트 */
+.hero__title--service {
+  pointer-events: none;
+  position: absolute;
+  bottom: 20%;
+  right: 5%;
+  font-size: clamp(55px, 9vw, 190px);
+}
+
+/* 시그니처 (이미지로 바꾸면 여기만 교체) */
+.hero__signature {
+  pointer-events: none;
+  position: absolute;
+  bottom: 25%;
+  right: 5%;
+  z-index: 1;
+}
+
+.hero__signatureImg {
+  display: block;
+  width: clamp(120px, 14vw, 220px); /* 크기 조절 */
+  height: auto;
+}
+
+/* 좌하단 카피 */
+.hero__copy {
+  position: absolute;
+  left: 160px;
+  bottom: 16%;
+
+  margin: 0;
+  font-size: clamp(12px, 1.2vw, 18px);
+  line-height: 1.45;
+  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.85);
+  text-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* 우하단 스크롤 */
+.hero__scroll {
+  position: absolute;
+  right: 160px;
+  bottom: 10%;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  opacity: 0.85;
+  user-select: none;
+}
+
+.hero__scrollText {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+  text-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+/* 1440 이하: 여백 살짝 줄이기 */
+@media (max-width: 1440px) {
+  .hero__inner {
+    padding: 0 120px 64px;
+  }
+  .hero__title--defining {
+    left: 120px;
+  }
+  .hero__serviceWrap {
+    right: 120px;
+  }
+  .hero__copy {
+    left: 120px;
+  }
+  .hero__scroll {
+    right: 120px;
+  }
+}
+
+/* 1024 이하: 좌우 여백 확 줄이고, bottom/top 재조정 */
+@media (max-width: 1024px) {
+  .hero {
+    --header-h: 64px;
+  }
+  .hero__inner {
+    padding: 0 48px 56px;
+  }
+
+  .hero__title--defining {
+    left: 48px;
+    top: 20%;
+  }
+
+  .hero__serviceWrap {
+    right: 48px;
+    bottom: 18%;
+  }
+
+  .hero__copy {
+    left: 48px;
+    bottom: 14%;
+  }
+
+  .hero__scroll {
+    right: 48px;
+    bottom: 8%;
+  }
+}
+
+/* 768 이하(태블릿/모바일): 얼굴 보호 위해 Service를 더 아래로 */
+@media (max-width: 768px) {
+  .hero__inner {
+    padding: 0 24px 48px;
+  }
+
+  .hero__title--defining {
+    left: 24px;
+    top: 18%;
+    font-size: clamp(44px, 10vw, 86px);
+  }
+
+  .hero__serviceWrap {
+    right: 24px;
+    bottom: 14%;
+  }
+
+  .hero__title--service {
+    font-size: clamp(48px, 12vw, 92px);
+  }
+
+  .hero__copy {
+    left: 24px;
+    bottom: 10%;
+    max-width: 220px;
+  }
+
+  .hero__scroll {
+    right: 24px;
+    bottom: 6%;
+  }
+}
+
+/* 480 이하(모바일): 텍스트 겹침 방지, 카피 축소 */
+@media (max-width: 480px) {
+  .hero__title--defining {
+    top: 16%;
+    font-size: 44px;
+  }
+
+  .hero__title--service {
+    font-size: 52px;
+  }
+
+  .hero__signature {
+    font-size: 18px;
+  }
+
+  .hero__copy {
+    font-size: 12px;
+    line-height: 1.4;
+    opacity: 0.9;
+  }
+
+  .hero__scrollText {
+    font-size: 10px;
+  }
+}

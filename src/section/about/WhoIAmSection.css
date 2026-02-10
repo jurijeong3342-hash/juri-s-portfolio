@@ -1,0 +1,189 @@
+.who-i-am-section {
+  min-height: 100vh;
+  width: 100%;
+  background: #000;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 초기 3개의 WHO I AM */
+.who-i-am-text {
+  position: absolute;
+  font-size: clamp(80px, 23vw, 322px);
+  font-weight: 700;
+  color: #ffb261;
+  letter-spacing: 13px;
+  line-height: 0.8;
+  white-space: nowrap;
+  width: 100%;
+  text-align: center;
+}
+
+.who-i-am-text.top {
+  top: 10%;
+}
+
+.who-i-am-text.middle {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.who-i-am-text.bottom {
+  bottom: 10%;
+}
+
+/* 합쳐진 후 상단 고정 */
+.who-i-am-fixed {
+  position: absolute;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: clamp(30px, 5vw, 60px);
+  font-weight: 700;
+  color: #ffb261;
+  letter-spacing: -2px;
+  display: none;
+  z-index: 10;
+}
+
+.whoiamNext {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  /* opacity/y는 GSAP가 제어 */
+}
+
+.whoiamNext__inner {
+  width: min(90%, 1500px);
+  height: 100%;
+  margin: 0 auto;
+  position: relative;
+  padding-top: 40px; /* 위 라벨 여백 */
+}
+
+.whoiamNext__hero {
+  position: relative;
+  height: calc(100% - 60px);
+}
+
+/* 큰 이름 */
+.whoiamNext__name {
+  position: absolute;
+  left: 0;
+  top: 20%;
+  margin: 0;
+
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: #f6e8d5;
+
+  font-size: clamp(140px, 16vw, 270px);
+  line-height: 0.85;
+
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* 2열 레이아웃 */
+.whoiamNext__layout {
+  position: relative;
+  z-index: 3;
+
+  height: 100%;
+  display: grid;
+  grid-template-columns: 520px 1fr;
+  align-items: end;
+  gap: clamp(24px, 4vw, 77px);
+  padding-bottom: clamp(40px, 6vh, 120px);
+}
+
+.whoiamNext__left {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+/* 프로필 이미지 */
+.whoiamNext__photo {
+  position: absolute;
+  left: 63px;
+  top: 56%;
+  transform: translateY(-20%);
+  width: 100%;
+  max-width: 34vw;
+  z-index: 4;
+}
+
+.whoiamNext__photo img {
+  width: 108%;
+  height: auto;
+  display: block;
+}
+
+/* 오른쪽 텍스트 */
+.whoiamNext__right {
+  max-width: 560px;
+  display: grid;
+  gap: 18px;
+  justify-self: center;
+}
+
+.whoiamNext__title {
+  margin: 0;
+  font-size: clamp(22px, 2.2vw, 45px);
+  line-height: 1.4;
+  font-weight: normal;
+  color: #ededed;
+}
+
+.whoiamNext__desc {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.whoiamNext__toolkitTitle {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #ededed;
+}
+
+.whoiamNext__chips {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+
+  font-size: 20px;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.next-section h2 {
+  font-size: clamp(24px, 4vw, 48px);
+  font-weight: 300;
+  line-height: 1.3;
+  color: #d84315;
+  letter-spacing: -0.5px;
+}
+
+@media (max-width: 768px) {
+  .who-i-am-fixed {
+    top: 60px;
+  }
+
+  .keyword {
+    margin-bottom: 15px;
+  }
+}

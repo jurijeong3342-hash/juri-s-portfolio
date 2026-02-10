@@ -1,0 +1,183 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 72px;
+  min-height: 72px;
+  max-height: 72px;
+  overflow: hidden;
+  z-index: 2000;
+  transition:
+    background 220ms ease,
+    color 220ms ease;
+  color: var(--fg);
+}
+
+.header a {
+  color: var(--fg);
+}
+
+.header .cta {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.workSection {
+  background: transparent;
+  color: var(--fg);
+}
+
+.header.themeLight {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.header-inner {
+  height: 100%;
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  align-items: center;
+  padding-left: 20px;
+  gap: 12px;
+}
+
+.menuBtn {
+  position: relative;
+  z-index: 2100;
+  top: 0;
+  transform: none;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: transparent;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.menuIcon {
+  width: 22px;
+  height: 22px;
+  display: block;
+  transform: none;
+}
+
+.centerNav {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+}
+
+.navLink {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  opacity: 0.72;
+  padding: 10px 6px;
+}
+
+.navLink.active {
+  opacity: 1;
+  font-weight: 600;
+}
+
+.cta {
+  width: 300px;
+  background: #ffb261;
+  color: #050505;
+  height: 100%;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+}
+
+.menuPanel {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 200ms ease,
+    visibility 0s linear 200ms;
+}
+
+.menuPanel.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition:
+    opacity 200ms ease,
+    visibility 0s;
+}
+
+.menuDim {
+  position: absolute;
+  z-index: 1;
+  top: 72px;
+  left: calc(min(320px, 86vw) - 2px);
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  background: rgba(0, 0, 0, 0.45);
+  pointer-events: none;
+  transition: opacity 200ms ease;
+}
+
+.menuPanel.open .menuDim {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.menuPanelInner {
+  position: absolute;
+  top: 72px;
+  left: 0;
+  width: min(320px, 86vw);
+  height: calc(100dvh - 72px);
+  background: #0a0a0a;
+  transform: translateX(-102%);
+  transition: transform 220ms ease;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.menuPanel.open .menuPanelInner {
+  transform: translateX(0);
+}
+
+.menuItem {
+  border: 0;
+  background: transparent;
+  color: #fff;
+  text-align: left;
+  padding: 14px 10px;
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  opacity: 0.9;
+}
+
+.menuItem:hover {
+  opacity: 1;
+}
+
+/* 반응형: 좁아지면 중앙 네비 간격/CTA 축소 */
+@media (max-width: 640px) {
+  .header-inner {
+    grid-template-columns: 56px 1fr auto;
+    padding: 0 14px;
+  }
+  .centerNav {
+    gap: 12px;
+  }
+  .cta {
+    height: 38px;
+    font-size: 12px;
+  }
+}
