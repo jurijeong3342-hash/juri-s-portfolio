@@ -63,7 +63,7 @@ export default function WhoIAmSection() {
       .to(
         text2Ref.current,
         {
-          scale: 0.3,
+          scale: 0.1,
           y: -window.innerHeight * 0.35,
           duration: 1,
         },
@@ -110,7 +110,12 @@ export default function WhoIAmSection() {
   }, []);
 
   return (
-    <section className="who-i-am-section" ref={sectionRef}>
+    <section
+      className="who-i-am-section"
+      ref={sectionRef}
+      data-header-bg="#050505"
+      data-header-theme="dark"
+    >
       {/* WHO I AM 텍스트 */}
       <div className="who-i-am-text top" ref={text1Ref}>
         <span>WHO I AM</span>

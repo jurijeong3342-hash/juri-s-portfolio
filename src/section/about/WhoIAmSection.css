@@ -12,11 +12,11 @@
 /* 초기 3개의 WHO I AM */
 .who-i-am-text {
   position: absolute;
-  font-size: clamp(80px, 23vw, 322px);
-  font-weight: 700;
+  font-size: clamp(80px, 23vw, 340px);
+  font-weight: 900;
   color: #ffb261;
-  letter-spacing: 13px;
-  line-height: 0.8;
+  letter-spacing: 12px;
+  line-height: 0.6;
   white-space: nowrap;
   width: 100%;
   text-align: center;

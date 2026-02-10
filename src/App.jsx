@@ -6,7 +6,9 @@ import Header from "./components/Header";
 import Hero from "./section/hero/Hero";
 import WhoIAmSection from "./section/about/WhoIAmSection";
 import Keywordsection from "./section/about/Keywordsection";
-
+import Work from "./section/work/Work";
+import CloneCoding from "./section/work/CloneCoding";
+import Hobby from "./section/work/Hobby";
 import Contact from "./section/contact/Contact";
 
 export default function App() {
@@ -38,6 +40,9 @@ export default function App() {
         {/* ✅ WhoIAm 섹션 */}
         <WhoIAmSection theme={theme} onTheme={applyTheme} />
         <Keywordsection />
+        <Work />
+        <CloneCoding />
+        <Hobby />
 
         <Contact />
       </main>

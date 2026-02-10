@@ -5,8 +5,9 @@ export default function Header() {
   const navItems = useMemo(
     () => [
       { id: "hero", label: "HOME" },
-      { id: "about", label: "ABOUT" },
-      { id: "work", label: "WORK" },
+      { id: "who-i-am-section", label: "ABOUT" },
+      { id: "work-container", label: "WORK" },
+      { id: "hobby-container", label: "OTHER" },
     ],
     [],
   );
@@ -15,7 +16,7 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   // 헤더 배경/테마 상태
-  const [headerBg, setHeaderBg] = useState("#050505"); // ✅ 초기값: 히어로
+  const [headerBg, setHeaderBg] = useState("#050505"); // 초기값: 히어로
   const [headerTheme, setHeaderTheme] = useState("dark"); // dark | light
 
   // 스크롤 중 observer 튐 방지
@@ -28,29 +29,74 @@ export default function Header() {
   };
 
   const scrollToId = (id) => {
-    const el = document.getElementById(id);
-    if (!el) return;
+    let el;
+
+    // 클래스 기반 섹션들
+    if (
+      id === "who-i-am-section" ||
+      id === "work-container" ||
+      id === "hobby-container"
+    ) {
+      el = document.querySelector(`.${id}`);
+    } else {
+      // ID 기반 섹션 (hero, contact)
+      el = document.getElementById(id);
+    }
+
+    if (!el) {
+      console.log(`Section not found: ${id}`);
+      return;
+    }
 
     setActiveId(id);
     setMenuOpen(false);
 
+    // 클릭 시 즉시 lock 활성화
     lockRef.current = true;
     if (lockTimerRef.current) clearTimeout(lockTimerRef.current);
 
-    const y =
-      el.getBoundingClientRect().top + window.scrollY - getHeaderOffset();
+    // who-i-am-section은 pinned 섹션이므로 정확한 시작 위치로 이동
+    let y;
+    if (id === "who-i-am-section") {
+      const rect = el.getBoundingClientRect();
+      const scrollTop =
+        window.pageYOffset || document.documentElement.scrollTop;
+      y = rect.top + scrollTop - getHeaderOffset();
+    } else {
+      y = el.getBoundingClientRect().top + window.scrollY - getHeaderOffset();
+    }
+
+    // 스크롤 실행
     window.scrollTo({ top: y, behavior: "smooth" });
 
+    // 스크롤 완료 후 lock 해제
     lockTimerRef.current = setTimeout(() => {
       lockRef.current = false;
-    }, 900);
+    }, 1200);
   };
 
-  // ✅ 섹션 진입 감지: activeId + header bg/theme 업데이트
+  // 새로고침 시 HERO 섹션으로 스크롤
   useEffect(() => {
-    const sectionIds = ["hero", "about", "work", "contact"];
-    const sections = sectionIds
-      .map((id) => document.getElementById(id))
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }, []);
+
+  // 섹션 진입 감지: activeId + header bg/theme 업데이트
+  useEffect(() => {
+    // 헤더 배경색이 바뀌어야 하는 모든 섹션
+    const sectionSelectors = [
+      "#hero",
+      ".who-i-am-section",
+      "#keyword-section",
+      "#next-section",
+      ".work-container",
+      ".projects-wrapper",
+      "#clone-coding-section",
+      ".hobby-container",
+      "#contact",
+    ];
+
+    const sections = sectionSelectors
+      .map((selector) => document.querySelector(selector))
       .filter(Boolean);
 
     if (sections.length === 0) return;
@@ -66,41 +112,57 @@ export default function Header() {
       (entries) => {
         if (lockRef.current) return;
 
-        const visible = entries
+        // 화면에 보이는 모든 섹션 찾기
+        const visibleSections = entries
           .filter((e) => e.isIntersecting)
           .map((e) => ({
             el: e.target,
-            id: e.target.id,
+            id: e.target.id || e.target.className,
             ratio: e.intersectionRatio ?? 0,
             top: e.boundingClientRect?.top ?? 999999,
           }))
           .sort((a, b) => {
-            // 위에 가까운 섹션 우선, 비슷하면 ratio 큰 쪽
-            if (Math.abs(a.top - b.top) > 40) return a.top - b.top;
-            return b.ratio - a.ratio;
-          })[0];
+            // 화면 상단에 가까운 섹션 우선
+            return a.top - b.top;
+          });
 
-        if (!visible?.el) return;
+        // 가장 위에 있는 섹션의 테마 적용
+        const topSection = visibleSections[0];
 
-        setActiveId((prev) => (prev === visible.id ? prev : visible.id));
-        applyFromSection(visible.el);
+        if (topSection?.el) {
+          // activeId 업데이트
+          if (topSection.el.id) {
+            setActiveId((prev) =>
+              prev === topSection.id ? prev : topSection.id,
+            );
+          } else if (topSection.el.classList.contains("who-i-am-section")) {
+            setActiveId("who-i-am-section");
+          } else if (topSection.el.classList.contains("work-container")) {
+            setActiveId("work-container");
+          } else if (topSection.el.classList.contains("hobby-container")) {
+            setActiveId("hobby-container");
+          }
+
+          // 헤더 테마 적용
+          applyFromSection(topSection.el);
+        }
       },
       {
-        threshold: [0.15, 0.25, 0.4, 0.55],
-        rootMargin: `-${getHeaderOffset()}px 0px -60% 0px`,
+        threshold: [0, 0.1, 0.2, 0.3, 0.5],
+        rootMargin: `-${getHeaderOffset()}px 0px -40% 0px`,
       },
     );
 
     sections.forEach((s) => io.observe(s));
 
-    // 첫 렌더 시 hero 기준 적용(혹시 스크롤된 상태로 로딩될 수 있으니까)
+    // 첫 렌더 시 hero 기준 적용
     const first = document.getElementById("hero");
     if (first) applyFromSection(first);
 
     return () => io.disconnect();
   }, []);
 
-  // 메뉴 열렸을 때 body 스크롤 잠그고 싶으면(선택)
+  // 메뉴 열렸을 때 body 스크롤 잠그기
   useEffect(() => {
     const prev = document.body.style.overflow;
     if (menuOpen) document.body.style.overflow = "hidden";
@@ -121,7 +183,6 @@ export default function Header() {
       style={{ background: headerBg }}
     >
       <div className="header-inner">
-        {/* 2) 좌측 메뉴 아이콘(이미지) + 토글 */}
         <button
           className="menuBtn"
           type="button"
@@ -136,7 +197,6 @@ export default function Header() {
           />
         </button>
 
-        {/* 3) 중앙 섹션 이름: HOME ABOUT WORK */}
         <nav className="centerNav" aria-label="Primary">
           {navItems.map((item) => (
             <button
@@ -151,7 +211,6 @@ export default function Header() {
           ))}
         </nav>
 
-        {/* 4) 우측 LET'S CONTACT 버튼 */}
         <button
           className="cta"
           type="button"
@@ -161,7 +220,6 @@ export default function Header() {
         </button>
       </div>
 
-      {/* 모바일/좌측 메뉴 패널 */}
       <div
         className={`menuPanel ${menuOpen ? "open" : ""}`}
         role="dialog"
@@ -171,11 +229,23 @@ export default function Header() {
           <button className="menuItem" onClick={() => scrollToId("hero")}>
             HOME
           </button>
-          <button className="menuItem" onClick={() => scrollToId("about")}>
+          <button
+            className="menuItem"
+            onClick={() => scrollToId("who-i-am-section")}
+          >
             ABOUT
           </button>
-          <button className="menuItem" onClick={() => scrollToId("work")}>
+          <button
+            className="menuItem"
+            onClick={() => scrollToId("work-container")}
+          >
             WORK
+          </button>
+          <button
+            className="menuItem"
+            onClick={() => scrollToId("hobby-container")}
+          >
+            OTHER
           </button>
           <button className="menuItem" onClick={() => scrollToId("contact")}>
             CONTACT

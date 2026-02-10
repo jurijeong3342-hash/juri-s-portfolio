@@ -13,12 +13,12 @@ export default function KeywordSection() {
   const nextSectionRef = useRef(null);
 
   const keywords = [
-    "Retrofuturist",
-    "Visual Minimalist",
-    "Tech Optimist",
-    "Design Geek",
-    "Change Agent",
-    "Vibestigator",
+    "Planning Thinker",
+    "UX Structrue Builder",
+    "TCode-Aware Planner",
+    "Experience Architect",
+    "Build-Ready Design",
+    "Product  Solver",
     "Caffeine Addict",
     "Community Builder",
   ];
@@ -34,6 +34,22 @@ export default function KeywordSection() {
         pin: true,
         scrub: 1,
         anticipatePin: 1,
+        onUpdate: (self) => {
+          // next-section의 opacity를 기준으로 테마 변경
+          const nextSectionOpacity = gsap.getProperty(
+            nextSectionRef.current,
+            "opacity",
+          );
+
+          // next-section이 나타나기 시작하면(opacity > 0) light 테마로 변경
+          if (nextSectionOpacity > 0) {
+            section.dataset.headerBg = "#FEE9CE";
+            section.dataset.headerTheme = "light";
+          } else {
+            section.dataset.headerBg = "#050505";
+            section.dataset.headerTheme = "dark";
+          }
+        },
       },
     });
 
@@ -45,8 +61,6 @@ export default function KeywordSection() {
     );
 
     // 2단계: 키워드 스크롤 + 색 채움
-    const totalScroll = keywordRefs.current.length * 150;
-
     keywordRefs.current.forEach((keyword, index) => {
       if (index > 0) {
         tl.to(
@@ -64,7 +78,7 @@ export default function KeywordSection() {
         keyword,
         {
           opacity: 1,
-          color: "#EAC9A6",
+          color: "#FEE9CE",
           duration: 0.4,
         },
         "-=0.4",
@@ -85,7 +99,7 @@ export default function KeywordSection() {
       .to(
         section,
         {
-          backgroundColor: "#EAC9A6",
+          backgroundColor: "#FEE9CE",
           duration: 1,
         },
         "-=1.5",
@@ -103,7 +117,13 @@ export default function KeywordSection() {
   }, []);
 
   return (
-    <section className="keyword-section" ref={sectionRef}>
+    <section
+      id="keyword-section"
+      className="keyword-section"
+      ref={sectionRef}
+      data-header-bg="#050505"
+      data-header-theme="dark"
+    >
       {/* 키워드 */}
       <div className="keywords-container" ref={keywordsContainerRef}>
         {keywords.map((keyword, i) => (
@@ -121,12 +141,14 @@ export default function KeywordSection() {
       </div>
 
       {/* 다음 섹션 */}
-      <div className="next-section" ref={nextSectionRef}>
+      <div id="next-section" className="next-section" ref={nextSectionRef}>
         <h2>
-          Won J. You is a seasoned design leader and educator who's spent over
-          20 years designing and creating award-winning experiences. At WJY
-          Studios, he leads the charge as chief disruptor and designer for
-          social impact.
+          "I structure ambiguous <br />
+          problems into clear UX flows <br />
+          and buildable solutions. <br />
+          UX-driven planning <br />
+          from problem definition <br />
+          to execution. "
         </h2>
       </div>
     </section>

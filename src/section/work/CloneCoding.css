@@ -1,0 +1,179 @@
+/* CloneCoding.css */
+
+.clone-coding-section {
+  min-height: 120vh;
+  background-color: #ef5143;
+  color: #ff897e; /* ✅ 기본 텍스트 */
+  padding: 100px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.clone-content {
+  max-width: 75%;
+  margin: 0 auto;
+  position: relative;
+}
+
+.clone-header {
+  margin-bottom: 100px;
+  text-align: center; /* ✅ 피그마처럼 중앙 정렬 */
+}
+
+.clone-title {
+  font-size: 120px;
+  font-weight: 800;
+  letter-spacing: -2px;
+  margin: 0;
+  line-height: 0.95;
+  color: #fee9ce; /* ✅ */
+}
+
+.clone-subtitle {
+  font-size: 14px;
+  font-weight: 400;
+  margin-top: 14px;
+  opacity: 0.9;
+  color: #fee9ce; /* ✅ */
+}
+
+.projects-list {
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+  position: relative;
+  z-index: 2;
+  margin-top: 70px;
+}
+
+.project-item {
+  cursor: pointer;
+  transition: all 0.25s ease;
+  padding: 0;
+}
+
+.project-name {
+  font-size: 56px; /* 피그마 느낌 */
+  font-weight: 800;
+  margin: 0;
+  line-height: 1.05;
+  transition:
+    color 0.25s ease,
+    opacity 0.25s ease,
+    transform 0.25s ease;
+  color: #ff897e; /* ✅ 초기 프로젝트 네임 컬러 */
+  opacity: 1;
+}
+
+.project-item:hover .project-name {
+  color: #fee9ce; /* ✅ 호버 컬러 */
+  transform: translateX(6px);
+}
+
+/* ✅ 우측 호버 이미지 컨테이너 */
+.hover-image-container {
+  position: fixed;
+  right: 90px;
+  top: 52%;
+  transform: translateY(-50%);
+  width: 690px; /* ✅ 피그마 스펙 */
+  height: 340px; /* ✅ 피그마 스펙 */
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hover-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.hover-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0px; /* 피그마처럼 각진 느낌이면 0 */
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.25);
+  animation: fadeInImage 0.25s ease;
+}
+
+/* (선택) 이미지 위에 프로젝트명 올리고 싶으면 유지 / 싫으면 삭제 */
+.hover-title {
+  position: absolute;
+  left: 18px;
+  bottom: 16px;
+  font-size: 18px;
+  font-weight: 800;
+  color: #fee9ce;
+  padding: 10px 12px;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-radius: 10px;
+  animation: fadeInTitle 0.2s ease;
+}
+
+@keyframes fadeInImage {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeInTitle {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1024px) {
+  .clone-coding-section {
+    padding: 90px 40px;
+  }
+
+  .clone-title {
+    font-size: 84px;
+  }
+
+  .project-name {
+    font-size: 44px;
+  }
+
+  .hover-image-container {
+    width: 520px;
+    height: 260px;
+    right: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .clone-header {
+    margin-bottom: 50px;
+  }
+
+  .clone-title {
+    font-size: 56px;
+  }
+
+  .project-name {
+    font-size: 36px;
+  }
+
+  /* ✅ 모바일에서는 우측 이미지 숨김 */
+  .hover-image-container {
+    display: none;
+  }
+
+  .projects-list {
+    margin-top: 40px;
+  }
+}

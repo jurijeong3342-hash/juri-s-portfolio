@@ -18,11 +18,6 @@
   color: var(--fg);
 }
 
-.header .cta {
-  background: var(--fg);
-  color: var(--bg);
-}
-
 .workSection {
   background: transparent;
   color: var(--fg);
@@ -33,12 +28,12 @@
 }
 
 .header-inner {
+  position: relative;
   height: 100%;
   display: grid;
   grid-template-columns: 56px 1fr auto;
   align-items: center;
   padding-left: 20px;
-  gap: 12px;
 }
 
 .menuBtn {
@@ -63,6 +58,9 @@
 }
 
 .centerNav {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   justify-content: center;
   gap: 18px;
@@ -85,12 +83,16 @@
 }
 
 .cta {
+  justify-self: end;
   width: 300px;
   background: #ffb261;
   color: #050505;
   height: 100%;
   cursor: pointer;
-  letter-spacing: 0.04em;
+  border: 0;
+  font-size: 18px;
+  font-weight: 700;
+  font-family: "inter", sans-serif;
 }
 
 .menuPanel {
@@ -125,6 +127,7 @@
   background: rgba(0, 0, 0, 0.45);
   pointer-events: none;
   transition: opacity 200ms ease;
+  border: 0;
 }
 
 .menuPanel.open .menuDim {
@@ -167,6 +170,20 @@
   opacity: 1;
 }
 
+@media (max-width: 900px) {
+  .centerNav {
+    display: none;
+  }
+
+  .header-inner {
+    grid-template-columns: 56px 1fr auto; /* 그대로 */
+  }
+
+  .cta {
+    width: 220px; /* 이미 너 스타일에 맞게 조절 */
+  }
+}
+
 /* 반응형: 좁아지면 중앙 네비 간격/CTA 축소 */
 @media (max-width: 640px) {
   .header-inner {
@@ -174,9 +191,11 @@
     padding: 0 14px;
   }
   .centerNav {
-    gap: 12px;
+    display: none;
   }
+
   .cta {
+    width: 120px;
     height: 38px;
     font-size: 12px;
   }
