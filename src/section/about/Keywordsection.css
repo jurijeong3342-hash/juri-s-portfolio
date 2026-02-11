@@ -31,24 +31,6 @@
   transform-origin: center center;
 }
 
-.next-section {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80%;
-  max-width: 1200px;
-  text-align: center;
-  z-index: 10;
-}
-
-.next-section h2 {
-  font-size: 4.5rem;
-  font-weight: 700;
-  line-height: 1.4;
-  color: #ef5143;
-}
-
 /* 키워드 리스트 */
 .keywords-container {
   position: absolute;
@@ -56,19 +38,21 @@
   left: 50%;
   transform: translateX(-50%);
   width: 90%;
-  max-width: 1200px;
+  max-width: 100%;
   text-align: center;
   z-index: 5;
 }
 
 .keyword {
-  font-size: clamp(40px, 7vw, 90px);
+  font-size: clamp(40px, 7vw, 170px);
   font-weight: 700;
   color: rgba(234, 201, 166, 0.3);
   letter-spacing: -2px;
-  margin-bottom: 50px;
   line-height: 1;
   transition: color 0.3s ease;
+  margin-bottom: 60px;
+  padding: 0;
+  height: 150px;
 }
 
 .keyword.last {
@@ -79,14 +63,21 @@
 /* 다음 섹션 */
 .next-section {
   position: absolute;
-  top: 50%;
+  top: 35%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 90%;
-  max-width: 1000px;
+  max-width: 90%;
   text-align: center;
   z-index: 20;
   opacity: 0;
+}
+
+.next-section h2 {
+  font-size: 6.5rem;
+  font-weight: 700;
+  line-height: 1.4;
+  color: #ef5143;
 }
 
 /* 반응형 */

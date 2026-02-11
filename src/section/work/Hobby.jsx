@@ -1,6 +1,3 @@
-// Hobby.jsx (복붙 최종본) — ✅ 영상 기준 "손에 착 붙는 드래그 + 놓으면 정리되듯 복귀"
-// ※ HOBBY 파트는 그대로 두고, SKILL만 "absolute draggable" 방식으로 완성
-
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -14,36 +11,46 @@ const Hobby = () => {
   const skillRef = useRef(null);
   const [activeHobby, setActiveHobby] = useState(3);
 
-  // ✅ 드래그 가능한 스킬 위치
+  // 드래그 가능한 스킬 위치
   const [skillPositions, setSkillPositions] = useState([]);
   const [draggingIndex, setDraggingIndex] = useState(null);
 
-  // ✅ 손맛(미끄러움 방지)용: 클릭 지점 오프셋 + 드래그 시작 위치
+  // 손맛(미끄러움 방지)용: 클릭 지점 오프셋 + 드래그 시작 위치
   const dragOffset = useRef({ x: 0, y: 0 });
   const dragStartPos = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // SKILL 섹션이 오른쪽에서 왼쪽으로 슬라이드하여 사이드바 옆에 고정
-      if (skillRef.current) {
-        gsap.to(skillRef.current, {
-          left: "80px",
-          ease: "none",
+      if (skillRef.current && containerRef.current) {
+        const tl = gsap.timeline({
           scrollTrigger: {
             trigger: containerRef.current,
             start: "top top",
-            end: "+=50%",
-            scrub: 1,
+            end: "+=400vh",
+            scrub: 2,
             pin: true,
             anticipatePin: 1,
           },
         });
+
+        // 1) 오른쪽에서 왼쪽으로 "드르륵" 슬라이드
+        tl.fromTo(
+          skillRef.current,
+          { left: "100vw" },
+          {
+            left: "150px",
+            ease: "power2.inOut", // ✅ "none" → "power2.inOut" (단계적 느낌)
+            duration: 1.1,
+          },
+        );
+
+        // 2) 고정 상태 유지
+        tl.to({}, { duration: 1.1 });
       }
     }, containerRef);
 
     return () => ctx.revert();
   }, []);
-
   const hobbies = [
     {
       title: "Exhibition & Digital Experience Exploration",
@@ -176,13 +183,13 @@ const Hobby = () => {
     },
   ];
 
-  // ✅ 스킬 초기 위치 설정
+  // 스킬 초기 위치 설정
   useEffect(() => {
     setSkillPositions(skills.map((s) => ({ x: s.x, y: s.y })));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // ✅ 드래그 시작 (손에 착 붙는 버전)
+  // 드래그 시작 (손에 착 붙는 버전)
   const handleMouseDown = (index, e) => {
     e.preventDefault();
 
@@ -303,33 +310,35 @@ const Hobby = () => {
       {/* HOBBY 섹션 */}
       <section ref={hobbyRef} className="hobby-section">
         <div className="sidebar-label">
-          <span className="label-text">MY HOBBY</span>
           <div className="scroll-indicator">
-            <span className="arrow">→</span>
-            <span className="scroll-text">SCROLL TO DISCOVER</span>
+            <span className="scroll-text">MY HOBBY</span>
           </div>
         </div>
 
         <div className="hobby-content">
-          <div className="hobby-image">
-            <img
-              src={hobbies[activeHobby].image}
-              alt={hobbies[activeHobby].title}
-              className="hobby-image-main"
-            />
-          </div>
+          <div className="hobby-top-box">
+            <div className="hobby-image">
+              <img
+                src={hobbies[activeHobby].image}
+                alt={hobbies[activeHobby].title}
+                className="hobby-image-main"
+              />
+            </div>
 
-          <div className="hobby-list">
-            <h2 className="hobby-title">HOBBY</h2>
-            {hobbies.map((hobby, index) => (
-              <p
-                key={index}
-                className={`hobby-item ${activeHobby === index ? "highlight" : ""}`}
-                onMouseEnter={() => setActiveHobby(index)}
-              >
-                {hobby.title}
-              </p>
-            ))}
+            <div className="hobby-list">
+              <h2 className="hobby-title">HOBBY</h2>
+              {hobbies.map((hobby, index) => (
+                <p
+                  key={index}
+                  className={`hobby-item ${activeHobby === index ? "highlight" : ""}`}
+                  onMouseEnter={() => setActiveHobby(index)}
+                >
+                  {hobby.title}
+                </p>
+              ))}
+            </div>
+          </div>
+          <div className="hobby-bottom-box">
             <p className="hobby-description">
               {hobbies[activeHobby].description}
             </p>
@@ -340,13 +349,10 @@ const Hobby = () => {
       {/* SKILL 섹션 */}
       <section ref={skillRef} className="skill-section">
         <div className="sidebar-label-skill">
-          <span className="label-text-skill">PROFESSIONAL SKILLS</span>
+          <span className="label-text-skill">MY SKILL</span>
         </div>
 
         <div className="skill-content">
-          <h2 className="skill-title">SKILL</h2>
-
-          {/* ✅ 드래그 가능한 영역 */}
           <div className="skills-draggable-area">
             {skills.map((skill, index) => {
               const pos = skillPositions[index] || { x: skill.x, y: skill.y };
@@ -372,11 +378,6 @@ const Hobby = () => {
               );
             })}
           </div>
-        </div>
-
-        <div className="navigation-arrows">
-          <span className="nav-arrow">→</span>
-          <span className="nav-arrow">→</span>
         </div>
       </section>
     </div>

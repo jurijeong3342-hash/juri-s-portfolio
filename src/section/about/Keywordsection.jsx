@@ -11,6 +11,7 @@ export default function KeywordSection() {
   const keywordRefs = useRef([]);
   const lastKeywordRef = useRef(null);
   const nextSectionRef = useRef(null);
+  const textLineRefs = useRef([]);
 
   const keywords = [
     "Planning Thinker",
@@ -21,6 +22,15 @@ export default function KeywordSection() {
     "Product  Solver",
     "Caffeine Addict",
     "Community Builder",
+  ];
+
+  const textLines = [
+    '"I structure ambiguous',
+    "problems into clear UX flows",
+    "and buildable solutions.",
+    "UX-driven planning",
+    "from problem definition",
+    'to execution."',
   ];
 
   useEffect(() => {
@@ -106,10 +116,35 @@ export default function KeywordSection() {
       )
       .fromTo(
         nextSectionRef.current,
-        { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, duration: 1 },
+        { opacity: 0 },
+        { opacity: 1, duration: 0.8 },
         "-=0.8",
       );
+
+    // 5단계: 텍스트 라인별로 채워지면서 올라오기
+    textLineRefs.current.forEach((line, index) => {
+      tl.fromTo(
+        line,
+        {
+          y: 30,
+          opacity: 0,
+          backgroundImage:
+            "linear-gradient(to right, #d84315 0%, #d84315 0%, rgba(216, 67, 21, 0.2) 0%, rgba(216, 67, 21, 0.2) 100%)",
+          backgroundClip: "text",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+        },
+        {
+          y: 0,
+          opacity: 1,
+          backgroundImage:
+            "linear-gradient(to right, #d84315 0%, #d84315 100%, rgba(216, 67, 21, 0.2) 100%, rgba(216, 67, 21, 0.2) 100%)",
+          duration: 0.6,
+          ease: "power2.out",
+        },
+        index === 0 ? "-=0.4" : "-=0.2",
+      );
+    });
 
     return () => {
       ScrollTrigger.getAll().forEach((t) => t.kill());
@@ -143,12 +178,16 @@ export default function KeywordSection() {
       {/* 다음 섹션 */}
       <div id="next-section" className="next-section" ref={nextSectionRef}>
         <h2>
-          "I structure ambiguous <br />
-          problems into clear UX flows <br />
-          and buildable solutions. <br />
-          UX-driven planning <br />
-          from problem definition <br />
-          to execution. "
+          {textLines.map((line, index) => (
+            <span
+              key={index}
+              className="text-line"
+              ref={(el) => (textLineRefs.current[index] = el)}
+              style={{ display: "block" }}
+            >
+              {line}
+            </span>
+          ))}
         </h2>
       </div>
     </section>

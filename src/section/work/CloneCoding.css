@@ -1,10 +1,10 @@
 /* CloneCoding.css */
 
 .clone-coding-section {
-  min-height: 120vh;
+  min-height: 200vh;
   background-color: #ef5143;
-  color: #ff897e; /* ✅ 기본 텍스트 */
-  padding: 100px 80px;
+  color: #ff897e;
+  padding: 200px 80px;
   position: relative;
   overflow: hidden;
 }
@@ -17,33 +17,33 @@
 
 .clone-header {
   margin-bottom: 100px;
-  text-align: center; /* ✅ 피그마처럼 중앙 정렬 */
+  text-align: center;
 }
 
 .clone-title {
-  font-size: 120px;
+  font-size: clamp(56px, 11vw, 282px);
   font-weight: 800;
-  letter-spacing: -2px;
-  margin: 0;
-  line-height: 0.95;
-  color: #fee9ce; /* ✅ */
+  letter-spacing: -0.02em;
+  margin-bottom: 50px;
+  line-height: 1.1;
+  color: #fee9ce;
 }
 
 .clone-subtitle {
-  font-size: 14px;
+  font-size: 30px;
   font-weight: 400;
   margin-top: 14px;
   opacity: 0.9;
-  color: #fee9ce; /* ✅ */
+  color: #fee9ce;
 }
 
 .projects-list {
   display: flex;
   flex-direction: column;
-  gap: 35px;
+  gap: 110px;
   position: relative;
   z-index: 2;
-  margin-top: 70px;
+  margin-top: 200px;
 }
 
 .project-item {
@@ -53,7 +53,7 @@
 }
 
 .project-name {
-  font-size: 56px; /* 피그마 느낌 */
+  font-size: clamp(56px, 11vw, 140px);
   font-weight: 800;
   margin: 0;
   line-height: 1.05;
@@ -137,7 +137,8 @@
 
 @media (max-width: 1024px) {
   .clone-coding-section {
-    padding: 90px 40px;
+    padding: 90px 40px 200px 40px; /* ✅ 태블릿 하단 패딩 */
+    min-height: 130vh;
   }
 
   .clone-title {
@@ -153,9 +154,18 @@
     height: 260px;
     right: 40px;
   }
+
+  .projects-list {
+    padding-bottom: 100px;
+  }
 }
 
 @media (max-width: 768px) {
+  .clone-coding-section {
+    padding: 90px 40px 150px 40px;
+    min-height: auto;
+  }
+
   .clone-header {
     margin-bottom: 50px;
   }
@@ -168,12 +178,12 @@
     font-size: 36px;
   }
 
-  /* ✅ 모바일에서는 우측 이미지 숨김 */
   .hover-image-container {
     display: none;
   }
 
   .projects-list {
     margin-top: 40px;
+    padding-bottom: 50px;
   }
 }
