@@ -40,10 +40,10 @@
 .projects-list {
   display: flex;
   flex-direction: column;
-  gap: 110px;
+  gap: 52px;
   position: relative;
   z-index: 2;
-  margin-top: 200px;
+  margin-top: 150px;
 }
 
 .project-item {

@@ -28,7 +28,7 @@
 
 /* 대각선 이미지 띠 섹션 */
 .diagonal-strips-section {
-  min-height: 115vh;
+  min-height: 135vh;
   background: #fee9ce;
   position: relative;
   padding: 0;
@@ -102,7 +102,7 @@
 
 /* 왼쪽 텍스트 */
 .text-left {
-  max-width: 50%;
+  max-width: 60%;
   font-size: 34px;
   line-height: 1.4;
   color: #070707;
@@ -180,8 +180,8 @@
   align-items: center;
   justify-content: space-between;
   max-width: 1920px;
-  width: 100%;
-  gap: 80px;
+  width: 80%;
+  gap: 30px;
 }
 
 .project-info {
@@ -198,22 +198,22 @@
   line-height: 100%;
   letter-spacing: -0.02em;
   text-transform: uppercase;
-  margin-bottom: 5px;
+  margin-bottom: 24px;
 }
 
 .work-project-name {
   color: #fee9ce;
-  font-size: 64px;
+  font-size: 80px;
   font-weight: 700;
   margin-bottom: 60px;
-  letter-spacing: 2px;
+  letter-spacing: -0.02em;
 }
 
 .project-description {
   color: #fee9ce;
   font-size: 26px;
   line-height: 1.8;
-  margin-bottom: 110px;
+  margin-bottom: 80px;
 }
 
 .project-buttons {
@@ -250,7 +250,6 @@
   height: auto;
   border-radius: 8px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-  transform: scale(1.45);
 }
 
 /* 반응형 */

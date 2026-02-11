@@ -39,8 +39,8 @@
 .hero__title--defining {
   position: absolute;
   top: 12%;
-  left: 3%;
-  font-size: clamp(55px, 10vw, 256px);
+  left: 5%;
+  font-size: clamp(55px, 11vw, 190px);
 }
 
 .hero__serviceWrap {
@@ -57,27 +57,30 @@
   pointer-events: none;
   position: absolute;
   bottom: 24%;
-  right: 3%;
-  font-size: clamp(55px, 10vw, 256px);
+  right: 5%;
+  font-size: clamp(55px, 11vw, 190px);
 }
 
 .hero__signature {
+  width: clamp(180px, 13vw, 320px);
+  height: auto;
   pointer-events: none;
   position: absolute;
-  bottom: 29%;
-  right: 5%;
+  bottom: 32%;
+  right: 4%;
   z-index: 1;
 }
 
 .hero__signatureImg {
+  width: 100%;
   display: block;
   height: auto;
 }
 
 .hero__copy {
   position: absolute;
-  left: 160px;
-  bottom: 10%;
+  left: 5%;
+  bottom: 11%;
   margin: 0;
   font-size: clamp(12px, 1.2vw, 28px);
   font-weight: bold;
@@ -88,8 +91,8 @@
 
 .hero__scroll {
   position: absolute;
-  right: 160px;
-  bottom: 10%;
+  right: 5%;
+  bottom: 11%;
   display: inline-flex;
   align-items: center;
   gap: 10px;

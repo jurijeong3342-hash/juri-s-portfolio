@@ -1,9 +1,11 @@
+// KeywordSection.jsx
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { TextPlugin } from "gsap/TextPlugin"; // 👈 추가
 import "./Keywordsection.css";
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, TextPlugin); // 👈 TextPlugin 등록
 
 export default function KeywordSection() {
   const sectionRef = useRef(null);
@@ -45,13 +47,11 @@ export default function KeywordSection() {
         scrub: 1,
         anticipatePin: 1,
         onUpdate: (self) => {
-          // next-section의 opacity를 기준으로 테마 변경
           const nextSectionOpacity = gsap.getProperty(
             nextSectionRef.current,
             "opacity",
           );
 
-          // next-section이 나타나기 시작하면(opacity > 0) light 테마로 변경
           if (nextSectionOpacity > 0) {
             section.dataset.headerBg = "#FEE9CE";
             section.dataset.headerTheme = "light";
@@ -70,8 +70,9 @@ export default function KeywordSection() {
       { opacity: 1, duration: 0.5 },
     );
 
-    // 2단계: 키워드 스크롤 + 색 채움
+    // 2단계: 키워드 스크롤 + 타이핑 효과
     keywordRefs.current.forEach((keyword, index) => {
+      // 스크롤 이동
       if (index > 0) {
         tl.to(
           keywordsContainerRef.current,
@@ -84,12 +85,20 @@ export default function KeywordSection() {
         );
       }
 
-      tl.to(
+      // 타이핑 효과 👇
+      const fullText = keywords[index];
+      
+      tl.fromTo(
         keyword,
         {
           opacity: 1,
+          text: "", // 빈 텍스트에서 시작
+        },
+        {
+          text: fullText, // 전체 텍스트로
           color: "#FEE9CE",
-          duration: 0.4,
+          duration: 0.8, // 타이핑 속도 조절
+          ease: "none",
         },
         "-=0.4",
       );
@@ -170,7 +179,7 @@ export default function KeywordSection() {
               if (i === keywords.length - 1) lastKeywordRef.current = el;
             }}
           >
-            {keyword}
+            {/* 초기값은 빈 문자열, GSAP가 채움 */}
           </h1>
         ))}
       </div>

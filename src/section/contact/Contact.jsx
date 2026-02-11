@@ -48,7 +48,7 @@ const Contact = () => {
       <section ref={firstScreenRef} className="contact-first-screen">
         <div className="contact-background">
           <img
-            src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1200&q=80"
+            src="./image/contact-visual.png"
             alt="Contact background"
             className="contact-bg-image"
           />
@@ -57,11 +57,10 @@ const Contact = () => {
 
         <div className="contact-content">
           <h1 className="contact-title">
-            LET'S <span className="design-text">DESIGN</span>
-            <br />
-            PLAN
-            <br />
-            TOGETHER
+            <span className="lets-text">LET'S</span>
+            <span className="design-text">DESIGN</span>
+            <span className="plan-text">PLAN</span>
+            <span className="together-text">TOGETHER</span>
           </h1>
 
           <div className="contact-info-grid">
@@ -104,7 +103,7 @@ const Contact = () => {
 
           <div className="signature">
             <img
-              src="/image/signature.png"
+              src="./image/Hero_sign.png"
               alt="Signature"
               className="signature-image"
             />

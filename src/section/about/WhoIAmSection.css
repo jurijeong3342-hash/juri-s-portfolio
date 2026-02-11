@@ -1,5 +1,6 @@
 .who-i-am-section {
   min-height: 100vh;
+  height: 100vh;
   width: 100%;
   background: #000;
   position: relative;
@@ -12,14 +13,25 @@
 /* 초기 3개의 WHO I AM */
 .who-i-am-text {
   position: absolute;
-  font-size: clamp(80px, 23vw, 480px);
+
+  /* 🔥 1920x1080 기준 거의 끝까지 차게 */
+  font-size: clamp(72px, 35vmin, 520px);
+
+  /* 줄 겹침 방지 + 볼드한 안정감 */
+  line-height: 0.82;
+
+  /* 거의 끝까지 밀되 과하지 않게 */
+  letter-spacing: clamp(2px, 0.9vw, 14px);
+
   font-weight: 900;
   color: #ffb261;
-  letter-spacing: 12px;
-  line-height: 0.5;
   white-space: nowrap;
   width: 100%;
   text-align: center;
+
+  /* 진짜 1~2px 잘림 방지용 안전 여백 */
+  padding-inline: clamp(8px, 1.5vw, 32px);
+  box-sizing: border-box;
 }
 
 .who-i-am-text.top {
@@ -40,7 +52,7 @@
   position: absolute;
   top: 100px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%), translateY(-15%);
   font-size: clamp(30px, 5vw, 60px);
   font-weight: 700;
   color: #ffb261;
@@ -75,7 +87,7 @@
 
 .whoiamNext__name {
   position: absolute;
-  top: 32%;
+  top: 37%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 100%;
@@ -83,7 +95,7 @@
   font-weight: 800;
   letter-spacing: -0.04em;
   color: #f6e8d5;
-  font-size: clamp(72px, 13vw, 371px);
+  font-size: clamp(72px, 17vw, 371px);
   line-height: 0.85;
   text-align: center;
 
@@ -109,9 +121,9 @@
 /* 프로필 이미지 */
 .whoiamNext__photo {
   position: absolute;
-  left: 8%;
+  left: 10%;
   top: 50%;
-  transform: translateY(-22%);
+  transform: translateY(-21%);
   width: 100%;
   max-width: 34vw;
   z-index: 4;
@@ -126,9 +138,9 @@
 /* 오른쪽 텍스트 */
 .whoiamNext__right {
   position: absolute;
-  right: 10%;
+  right: 14%;
   top: 51%;
-  transform: translateY(21%);
+  transform: translateY(10%);
   max-width: 60%;
   display: grid;
   gap: 34px;
