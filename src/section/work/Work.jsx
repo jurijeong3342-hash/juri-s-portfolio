@@ -153,6 +153,7 @@ const Work = () => {
       팀 내 협업을 통해 진행했으며, 역할 간 조율과 구조
       설계를 중심으로 기획 및 인터랙션을 구현했습니다.`,
       image: "/image/project_1.png",
+      link: "https://your-dugout-link.com",
     },
     {
       type: "TEAM PROJECT",
