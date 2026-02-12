@@ -205,7 +205,7 @@ const Work = () => {
       운영 기능을 역할 기반 구조로 정의해 효율적인 운영 흐름을
       기획했습니다. 플랫폼 구조와 권한 체계를 고려한 정보 구조
       설계 중심의 프로젝트입니다.`,
-      image: "/image/project_puppy.png",
+      image: "/image/project_cms.png",
     },
   ];
 

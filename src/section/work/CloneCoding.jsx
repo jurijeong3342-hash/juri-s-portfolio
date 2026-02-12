@@ -12,33 +12,27 @@ const CloneCoding = () => {
   const projects = [
     {
       name: "Musign",
-      image:
-        "https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=600&q=80",
+      image: "./image/clone_musign.png",
     },
     {
       name: "Y Studio",
-      image:
-        "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
+      image: "./image/clone_y.png",
     },
     {
       name: "Dopda",
-      image:
-        "https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=600&q=80",
+      image: "./image/clone_dopda.png",
     },
     {
       name: "Crew a la Mode",
-      image:
-        "https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=600&q=80",
+      image: "./image/clone_crew.png",
     },
     {
       name: "Daebang",
-      image:
-        "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80",
+      image: "./image/clone_dea.png",
     },
     {
       name: "Phomein",
-      image:
-        "https://images.unsplash.com/photo-1551434678-e076c223a692?w=600&q=80",
+      image: "./image/clone_pho.png",
     },
     {
       name: "Hanhwa",
