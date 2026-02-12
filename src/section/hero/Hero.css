@@ -1,5 +1,7 @@
 .hero {
   --header-h: 72px;
+  --gutter: 160px;
+
   position: relative;
   min-height: 100vh;
   overflow: hidden;
@@ -23,7 +25,7 @@
 .hero__inner {
   position: relative;
   z-index: 1;
-  padding: 0 160px 70px;
+  padding: 0 var(--gutter) 70px;
   height: calc(100vh - var(--header-h));
 }
 
@@ -36,16 +38,17 @@
   pointer-events: none;
 }
 
+/* ✅ 1920에서 190px 찍히도록: 190/1920 = 9.9vw */
 .hero__title--defining {
   position: absolute;
   top: 12%;
-  left: 5%;
-  font-size: clamp(55px, 11vw, 190px);
+  left: calc(var(--gutter) - 60px);
+  font-size: clamp(60px, 9.9vw, 190px);
 }
 
 .hero__serviceWrap {
   position: absolute;
-  right: 160px;
+  right: var(--gutter);
   bottom: 20%;
 
   display: grid;
@@ -53,12 +56,13 @@
   gap: 10px;
 }
 
+/* ✅ right도 gutter로 통일 (기존 5% 대신) */
 .hero__title--service {
   pointer-events: none;
   position: absolute;
   bottom: 24%;
-  right: 5%;
-  font-size: clamp(55px, 11vw, 190px);
+  right: var(--gutter);
+  font-size: clamp(60px, 9.9vw, 190px);
 }
 
 .hero__signature {
@@ -67,7 +71,7 @@
   pointer-events: none;
   position: absolute;
   bottom: 32%;
-  right: 4%;
+  right: var(--gutter);
   z-index: 1;
 }
 
@@ -79,7 +83,7 @@
 
 .hero__copy {
   position: absolute;
-  left: 5%;
+  left: var(--gutter);
   bottom: 11%;
   margin: 0;
   font-size: clamp(12px, 1.2vw, 28px);
@@ -91,7 +95,7 @@
 
 .hero__scroll {
   position: absolute;
-  right: 5%;
+  right: var(--gutter);
   bottom: 11%;
   display: inline-flex;
   align-items: center;
@@ -107,68 +111,89 @@
   color: rgba(255, 255, 255, 0.85);
 }
 
+/* =========================
+   1440 이하
+   - gutter만 줄이면 모든 요소가 같이 따라옴
+   ========================= */
 @media (max-width: 1440px) {
-  .hero__inner {
-    padding: 0 120px 64px;
+  .hero {
+    --gutter: 120px;
   }
-  .hero__title--defining {
-    left: 120px;
-  }
-  .hero__serviceWrap {
-    right: 120px;
-  }
+
   .hero__copy {
-    left: 120px;
+    color: #f6efe6;
   }
-  .hero__scroll {
-    right: 120px;
+
+  .hero__scrollText {
+    font-size: 18px;
+    letter-spacing: 0.08em;
+  }
+
+  .hero__signature {
+    bottom: 26%;
+    right: calc(var(--gutter) * 0.2);
   }
 }
 
-/* 1024 이하: 좌우 여백 확 줄이고, bottom/top 재조정 */
+/* =========================
+   1024 이하
+   ========================= */
 @media (max-width: 1024px) {
   .hero {
     --header-h: 64px;
+    --gutter: 48px;
   }
+
   .hero__inner {
-    padding: 0 48px 56px;
+    padding-bottom: 56px;
   }
 
   .hero__title--defining {
-    left: 48px;
     top: 20%;
   }
 
   .hero__serviceWrap {
-    right: 48px;
     bottom: 18%;
   }
 
   .hero__copy {
-    left: 48px;
     bottom: 14%;
   }
 
+  /* 기존 코드가 right:70px 이었는데, gutter(48)보다 살짝 안쪽으로 */
   .hero__scroll {
-    right: 48px;
+    right: calc(var(--gutter) + 22px);
     bottom: 8%;
+  }
+
+  .hero__scrollText {
+    font-size: 14px;
+    letter-spacing: 0.08em;
+  }
+
+  .hero__signature {
+    right: calc(var(--gutter) * 0.2);
   }
 }
 
-/* 768 이하(태블릿/모바일): 얼굴 보호 위해 Service를 더 아래로 */
+/* =========================
+   768 이하
+   ========================= */
 @media (max-width: 768px) {
+  .hero {
+    --gutter: 24px;
+  }
+
   .hero__inner {
-    padding: 0 24px 48px;
+    padding-bottom: 48px;
   }
 
   .hero__title--defining {
-    left: 24px;
     top: 18%;
     font-size: clamp(44px, 10vw, 86px);
   }
 
   .hero__serviceWrap {
-    right: 24px;
     bottom: 14%;
   }
 
@@ -177,18 +202,24 @@
   }
 
   .hero__copy {
-    left: 24px;
     bottom: 10%;
     max-width: 220px;
   }
 
   .hero__scroll {
-    right: 24px;
+    right: var(--gutter);
     bottom: 6%;
+  }
+
+  .hero__signature {
+    bottom: 28%;
+    right: var(--gutter);
   }
 }
 
-/* 480 이하(모바일): 텍스트 겹침 방지, 카피 축소 */
+/* =========================
+   480 이하
+   ========================= */
 @media (max-width: 480px) {
   .hero__title--defining {
     top: 16%;
@@ -199,8 +230,11 @@
     font-size: 52px;
   }
 
+  /* ⚠️ 기존 코드에 signature font-size가 있었는데,
+     지금 signature는 이미지 컨테이너라 의미 없음.
+     (필요하면 width만 조절) */
   .hero__signature {
-    font-size: 18px;
+    width: 180px;
   }
 
   .hero__copy {
