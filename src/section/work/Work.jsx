@@ -97,6 +97,29 @@ const Work = () => {
         });
       }
 
+      // ✅ horizontal-section 진입/이탈 시 헤더 테마 강제 변경
+      if (horizontalSectionRef.current) {
+        ScrollTrigger.create({
+          trigger: horizontalSectionRef.current,
+          start: "top top",
+          end: "bottom top",
+          onEnter: () => {
+            window.dispatchEvent(
+              new CustomEvent("headerThemeChange", {
+                detail: { bg: "#050505", theme: "dark" },
+              }),
+            );
+          },
+          onLeaveBack: () => {
+            window.dispatchEvent(
+              new CustomEvent("headerThemeChange", {
+                detail: { bg: "#FEE9CE", theme: "light" },
+              }),
+            );
+          },
+        });
+      }
+
       // 가로 스크롤
       if (horizontalSectionRef.current) {
         const projects =
@@ -224,7 +247,12 @@ const Work = () => {
   ];
 
   return (
-    <div ref={containerRef} className="work-container">
+    <div
+      ref={containerRef}
+      className="work-container"
+      data-header-bg="#FEE9CE"
+      data-header-theme="light"
+    >
       <section className="header-section">
         <h1 className="work-title">WORK</h1>
       </section>
@@ -288,7 +316,13 @@ const Work = () => {
           ))}
         </div>
       </section>
-      <section ref={horizontalSectionRef} className="horizontal-section">
+      <section
+        ref={horizontalSectionRef}
+        className="horizontal-section"
+        data-header-bg="#050505"
+        data-header-theme="dark"
+      >
+        {" "}
         <div
           className="projects-wrapper"
           data-header-bg="#050505"

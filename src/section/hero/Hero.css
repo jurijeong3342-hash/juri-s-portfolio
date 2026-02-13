@@ -1,249 +1,179 @@
-.hero {
-  --header-h: 72px;
-  --gutter: 160px;
-
+.hero.hero--portfolio {
   position: relative;
   min-height: 100vh;
+  background: #050505;
+  color: #fff3e2;
   overflow: hidden;
-  padding-top: calc(var(--header-h) + 28px);
 }
 
-.hero__bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-}
-
-.hero__bgImg {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  transform: scale(1.02);
-}
-
-.hero__inner {
-  position: relative;
-  z-index: 1;
-  padding: 0 var(--gutter) 70px;
-  height: calc(100vh - var(--header-h));
-}
-
-.hero__title {
-  margin: 0;
-  font-weight: 700;
-  line-height: 0.92;
-  letter-spacing: -0.02em;
-  color: #f6efe6;
-  pointer-events: none;
-}
-
-/* ✅ 1920에서 190px 찍히도록: 190/1920 = 9.9vw */
-.hero__title--defining {
-  position: absolute;
-  top: 12%;
-  left: calc(var(--gutter) - 60px);
-  font-size: clamp(60px, 9.9vw, 190px);
-}
-
-.hero__serviceWrap {
-  position: absolute;
-  right: var(--gutter);
-  bottom: 20%;
-
+.hero--portfolio .hero__inner {
+  width: 90%;
+  margin: 0 auto;
+  min-height: 100vh;
   display: grid;
-  justify-items: end;
-  gap: 10px;
+  align-items: center;
 }
 
-/* ✅ right도 gutter로 통일 (기존 5% 대신) */
-.hero__title--service {
-  pointer-events: none;
-  position: absolute;
-  bottom: 24%;
-  right: var(--gutter);
-  font-size: clamp(60px, 9.9vw, 190px);
-}
-
-.hero__signature {
-  width: clamp(180px, 13vw, 320px);
-  height: auto;
-  pointer-events: none;
-  position: absolute;
-  bottom: 32%;
-  right: var(--gutter);
-  z-index: 1;
-}
-
-.hero__signatureImg {
+.hero--portfolio .hero__layout {
   width: 100%;
-  display: block;
-  height: auto;
+  display: grid; /* ✅ 이거 없어서 지금 세로로 쌓인거 */
+  grid-template-columns: 1.1fr 1fr; /* ✅ 왼쪽/오른쪽 2컬럼 */
+  align-items: center;
+  column-gap: clamp(40px, 6vw, 110px);
+  min-height: 70vh;
 }
 
-.hero__copy {
-  position: absolute;
-  left: var(--gutter);
-  bottom: 11%;
-  margin: 0;
-  font-size: clamp(12px, 1.2vw, 28px);
-  font-weight: bold;
-  line-height: 1.4;
-  letter-spacing: 0.02em;
-  color: #050505;
+.hero--portfolio .hero__left {
+  align-self: start;
+  padding-top: 40px;
 }
 
-.hero__scroll {
-  position: absolute;
-  right: var(--gutter);
-  bottom: 11%;
+.hero--portfolio .hero__meta {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  opacity: 0.85;
-  user-select: none;
+  gap: 22px; /* 도트 ↔ INTO 간격 */
 }
 
-.hero__scrollText {
-  font-size: 20px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.85);
+.hero--portfolio .hero__right {
+  align-self: end;
+  padding-bottom: 80px;
+  text-align: left;
 }
 
-/* =========================
-   1440 이하
-   - gutter만 줄이면 모든 요소가 같이 따라옴
-   ========================= */
-@media (max-width: 1440px) {
-  .hero {
-    --gutter: 120px;
-  }
-
-  .hero__copy {
-    color: #f6efe6;
-  }
-
-  .hero__scrollText {
-    font-size: 18px;
-    letter-spacing: 0.08em;
-  }
-
-  .hero__signature {
-    bottom: 26%;
-    right: calc(var(--gutter) * 0.2);
-  }
+/* 타이포 기본 */
+.hero--portfolio .hero__headline {
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
 }
 
-/* =========================
-   1024 이하
-   ========================= */
+.hero--portfolio .hero__headline span {
+  display: block;
+  will-change: transform, opacity;
+}
+
+.hero--portfolio .hero__headline--left {
+  font-size: clamp(56px, 6.5vw, 120px);
+}
+
+.hero--portfolio .hero__headline--right {
+  font-size: clamp(56px, 6.5vw, 120px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+  margin: 0;
+}
+
+.hero--portfolio .hero__headline--right span {
+  display: block;
+}
+
+.hero--portfolio .hero__dot {
+  width: clamp(44px, 4.8vw, 90px);
+  height: clamp(44px, 4.8vw, 90px);
+  border-radius: 999px;
+  background: #fff3e2;
+  flex: 0 0 auto;
+}
+
+.hero--portfolio .hero__into {
+  position: static;
+  text-align: left;
+  font-size: clamp(56px, 6.5vw, 120px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.hero--portfolio .hero__sub {
+  margin-top: 28px;
+  max-width: 460px;
+  font-size: 16px;
+  line-height: 1.6;
+  opacity: 0.95;
+}
+
+.hero--portfolio .hero__sub p {
+  margin: 0;
+}
+
+.hero--portfolio .hero__sub p + p {
+  margin-top: 6px;
+}
+
+.hero--portfolio .hero__subFooter {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.hero--portfolio .hero__subStrong {
+  font-weight: 700;
+}
+
+.hero--portfolio .hero__line {
+  flex: 1;
+  height: 1px;
+  background: #fff3e2;
+  opacity: 0.9;
+}
+
 @media (max-width: 1024px) {
-  .hero {
-    --header-h: 64px;
-    --gutter: 48px;
+  .hero--portfolio .hero__inner {
+    padding: 0 64px;
   }
 
-  .hero__inner {
-    padding-bottom: 56px;
+  .hero--portfolio .hero__layout {
+    gap: 36px;
   }
 
-  .hero__title--defining {
-    top: 20%;
-  }
-
-  .hero__serviceWrap {
-    bottom: 18%;
-  }
-
-  .hero__copy {
-    bottom: 14%;
-  }
-
-  /* 기존 코드가 right:70px 이었는데, gutter(48)보다 살짝 안쪽으로 */
-  .hero__scroll {
-    right: calc(var(--gutter) + 22px);
-    bottom: 8%;
-  }
-
-  .hero__scrollText {
-    font-size: 14px;
-    letter-spacing: 0.08em;
-  }
-
-  .hero__signature {
-    right: calc(var(--gutter) * 0.2);
+  .hero--portfolio .hero__sub {
+    font-size: 15px;
   }
 }
 
-/* =========================
-   768 이하
-   ========================= */
 @media (max-width: 768px) {
-  .hero {
-    --gutter: 24px;
+  .hero--portfolio .hero__layout {
+    grid-template-columns: 1fr;
+    row-gap: 22px;
+    align-items: start;
   }
 
-  .hero__inner {
-    padding-bottom: 48px;
+  .hero--portfolio .hero__right {
+    padding-top: 0;
   }
 
-  .hero__title--defining {
-    top: 18%;
-    font-size: clamp(44px, 10vw, 86px);
+  .hero--portfolio .hero__dot {
+    position: relative;
+    left: 0;
+    top: 0;
+    margin: 6px 0 10px;
+    width: 14px;
+    height: 14px;
   }
 
-  .hero__serviceWrap {
-    bottom: 14%;
+  .hero--portfolio .hero__into {
+    position: relative;
+    right: auto;
+    top: auto;
+    margin-bottom: 10px;
   }
 
-  .hero__title--service {
-    font-size: clamp(48px, 12vw, 92px);
-  }
-
-  .hero__copy {
-    bottom: 10%;
-    max-width: 220px;
-  }
-
-  .hero__scroll {
-    right: var(--gutter);
-    bottom: 6%;
-  }
-
-  .hero__signature {
-    bottom: 28%;
-    right: var(--gutter);
+  .hero--portfolio .hero__headline--right {
+    padding-top: 0;
   }
 }
 
 /* =========================
-   480 이하
+   Small Mobile
    ========================= */
-@media (max-width: 480px) {
-  .hero__title--defining {
-    top: 16%;
-    font-size: 44px;
+@media (max-width: 390px) {
+  .hero--portfolio .hero__headline--left,
+  .hero--portfolio .hero__headline--right {
+    font-size: 42px;
   }
 
-  .hero__title--service {
-    font-size: 52px;
-  }
-
-  /* ⚠️ 기존 코드에 signature font-size가 있었는데,
-     지금 signature는 이미지 컨테이너라 의미 없음.
-     (필요하면 width만 조절) */
-  .hero__signature {
-    width: 180px;
-  }
-
-  .hero__copy {
-    font-size: 12px;
-    line-height: 1.4;
-    opacity: 0.9;
-  }
-
-  .hero__scrollText {
-    font-size: 10px;
+  .hero--portfolio .hero__sub {
+    font-size: 13px;
   }
 }

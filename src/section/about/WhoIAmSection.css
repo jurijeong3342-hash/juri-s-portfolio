@@ -87,7 +87,7 @@
 
 .whoiamNext__name {
   position: absolute;
-  top: 37%;
+  top: 29%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 100%;
@@ -95,7 +95,7 @@
   font-weight: 800;
   letter-spacing: -0.04em;
   color: #f6e8d5;
-  font-size: clamp(72px, 17vw, 371px);
+  font-size: clamp(72px, 16vw, 371px);
   line-height: 0.85;
   text-align: center;
 
@@ -121,11 +121,11 @@
 /* 프로필 이미지 */
 .whoiamNext__photo {
   position: absolute;
-  left: 10%;
+  left: 8%;
   top: 50%;
-  transform: translateY(-21%);
+  transform: translateY(-24%);
   width: 100%;
-  max-width: 34vw;
+  max-width: 35vw;
   z-index: 4;
 }
 
@@ -138,17 +138,15 @@
 /* 오른쪽 텍스트 */
 .whoiamNext__right {
   position: absolute;
-  right: 14%;
+  right: 13%;
   top: 51%;
-  transform: translateY(10%);
+  transform: translateY(-1%);
   max-width: 60%;
-  display: grid;
-  gap: 34px;
   justify-self: center;
 }
 
 .whoiamNext__title {
-  margin: 0;
+  margin-bottom: 20px;
   font-size: clamp(22px, 2.2vw, 48px);
   line-height: 1.4;
   font-weight: normal;
@@ -156,18 +154,18 @@
 }
 
 .whoiamNext__desc {
-  margin: 0;
+  margin-bottom: 64px;
   font-size: 18px;
   font-weight: 300;
   line-height: 1.4;
-  color: rgba(255, 255, 255, 0.68);
+  color: #fff3e2;
 }
 
 .whoiamNext__toolkitTitle {
   font-size: 26px;
   font-weight: 700;
   margin-bottom: 10px;
-  color: #ededed;
+  color: #fff3e2;
 }
 
 .whoiamNext__chips {
@@ -179,7 +177,7 @@
   flex-wrap: wrap;
   font-size: 20px;
   font-weight: 300;
-  color: rgba(255, 255, 255, 0.68);
+  color: #fff3e2;
 }
 
 @media (max-width: 768px) {

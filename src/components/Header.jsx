@@ -79,6 +79,23 @@ export default function Header() {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
   }, []);
+  //  GSAP(KeywordSection)에서 헤더 테마 강제 변경 이벤트 받기
+  useEffect(() => {
+    const onTheme = (e) => {
+      const { bg, theme } = e.detail || {};
+      lockRef.current = true;
+      if (lockTimerRef.current) clearTimeout(lockTimerRef.current);
+      lockTimerRef.current = setTimeout(() => {
+        lockRef.current = false;
+      }, 700);
+
+      if (bg) setHeaderBg(bg);
+      if (theme) setHeaderTheme(theme);
+    };
+
+    window.addEventListener("headerThemeChange", onTheme);
+    return () => window.removeEventListener("headerThemeChange", onTheme);
+  }, []);
 
   // 섹션 진입 감지: activeId + header bg/theme 업데이트
   useEffect(() => {
@@ -87,12 +104,9 @@ export default function Header() {
       "#hero",
       ".who-i-am-section",
       "#keyword-section",
-      "#next-section",
-      ".work-container",
-      ".projects-wrapper",
-      "#clone-coding-section",
-      ".hobby-container",
       "#contact",
+      ".work-container",
+      ".hobby-container",
     ];
 
     const sections = sectionSelectors
@@ -117,14 +131,12 @@ export default function Header() {
           .filter((e) => e.isIntersecting)
           .map((e) => ({
             el: e.target,
-            id: e.target.id || e.target.className,
             ratio: e.intersectionRatio ?? 0,
             top: e.boundingClientRect?.top ?? 999999,
+            opacity: parseFloat(getComputedStyle(e.target).opacity || "1"),
           }))
-          .sort((a, b) => {
-            // 화면 상단에 가까운 섹션 우선
-            return a.top - b.top;
-          });
+          .filter((s) => s.opacity > 0.6) // ✅ next-section이 opacity 0~0.5면 무시
+          .sort((a, b) => a.top - b.top);
 
         // 가장 위에 있는 섹션의 테마 적용
         const topSection = visibleSections[0];

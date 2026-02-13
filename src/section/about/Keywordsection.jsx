@@ -46,20 +46,6 @@ export default function KeywordSection() {
         pin: true,
         scrub: 1,
         anticipatePin: 1,
-        onUpdate: (self) => {
-          const nextSectionOpacity = gsap.getProperty(
-            nextSectionRef.current,
-            "opacity",
-          );
-
-          if (nextSectionOpacity > 0) {
-            section.dataset.headerBg = "#FEE9CE";
-            section.dataset.headerTheme = "light";
-          } else {
-            section.dataset.headerBg = "#050505";
-            section.dataset.headerTheme = "dark";
-          }
-        },
       },
     });
 
@@ -87,7 +73,7 @@ export default function KeywordSection() {
 
       // 타이핑 효과 👇
       const fullText = keywords[index];
-      
+
       tl.fromTo(
         keyword,
         {
@@ -126,7 +112,24 @@ export default function KeywordSection() {
       .fromTo(
         nextSectionRef.current,
         { opacity: 0 },
-        { opacity: 1, duration: 0.8 },
+        {
+          opacity: 1,
+          duration: 0.8,
+          onStart: () => {
+            window.dispatchEvent(
+              new CustomEvent("headerThemeChange", {
+                detail: { bg: "#FEE9CE", theme: "light" },
+              }),
+            );
+          },
+          onReverseComplete: () => {
+            window.dispatchEvent(
+              new CustomEvent("headerThemeChange", {
+                detail: { bg: "#050505", theme: "dark" },
+              }),
+            );
+          },
+        },
         "-=0.8",
       );
 
@@ -185,6 +188,13 @@ export default function KeywordSection() {
       </div>
 
       {/* 다음 섹션 */}
+      <div
+        id="next-section"
+        className="next-section"
+        ref={nextSectionRef}
+        data-header-bg="#FEE9CE"
+        data-header-theme="light"
+      ></div>
       <div id="next-section" className="next-section" ref={nextSectionRef}>
         <h2>
           {textLines.map((line, index) => (
