@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import "./Header.css";
 
 export default function Header() {
@@ -14,167 +14,187 @@ export default function Header() {
 
   const [activeId, setActiveId] = useState("hero");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [headerBg, setHeaderBg] = useState("#050505");
+  const [headerTheme, setHeaderTheme] = useState("dark");
 
-  // 헤더 배경/테마 상태
-  const [headerBg, setHeaderBg] = useState("#050505"); // 초기값: 히어로
-  const [headerTheme, setHeaderTheme] = useState("dark"); // dark | light
-
-  // 스크롤 중 observer 튐 방지
   const lockRef = useRef(false);
   const lockTimerRef = useRef(null);
+  const rafRef = useRef(null);
+  const forcedNavRef = useRef(null);
+
+  // horizontal-section(projects-wrapper) 진입 여부 추적
+  const inHorizontalRef = useRef(false);
 
   const getHeaderOffset = () => {
     const header = document.querySelector(".header");
     return (header?.offsetHeight ?? 0) + 8;
   };
 
-  const scrollToId = (id) => {
-    let el;
+  // horizontal-section이 현재 뷰포트 상단에 pinned 중인지 확인
+  const isHorizontalSectionActive = () => {
+    const el = document.querySelector(".horizontal-section");
+    if (!el) return false;
+    const rect = el.getBoundingClientRect();
+    // pin 상태이면 top이 헤더 높이 근처에 고정됨
+    return (
+      rect.top <= getHeaderOffset() + 2 &&
+      rect.bottom > window.innerHeight * 0.5
+    );
+  };
 
-    // 클래스 기반 섹션들
-    if (
-      id === "who-i-am-section" ||
-      id === "work-container" ||
-      id === "hobby-container"
-    ) {
-      el = document.querySelector(`.${id}`);
-    } else {
-      // ID 기반 섹션 (hero, contact)
-      el = document.getElementById(id);
+  const getSectionMeta = useCallback(() => {
+    const selectors = [
+      { id: "hero", selector: "#hero" },
+      { id: "who-i-am-section", selector: ".who-i-am-section" },
+      {
+        id: "keyword-section",
+        selector: "#keyword-section",
+        navId: "who-i-am-section",
+      },
+      { id: "work-container", selector: ".work-container" },
+      { id: "hobby-container", selector: ".hobby-container" },
+      { id: "contact", selector: "#contact" },
+    ];
+
+    const scrollTop = window.scrollY;
+    const results = [];
+
+    for (const item of selectors) {
+      const el = document.querySelector(item.selector);
+      if (!el) continue;
+
+      const rect = el.getBoundingClientRect();
+      const top = rect.top + scrollTop;
+
+      const parentSpacer = el.parentElement?.classList?.contains("pin-spacer")
+        ? el.parentElement
+        : null;
+      const height = parentSpacer ? parentSpacer.offsetHeight : el.offsetHeight;
+
+      results.push({
+        navId: item.navId || item.id,
+        el,
+        top,
+        bottom: top + height,
+        bg: el.dataset.headerBg,
+        theme: el.dataset.headerTheme,
+      });
     }
 
-    if (!el) {
-      console.log(`Section not found: ${id}`);
+    return results;
+  }, []);
+
+  const isNextSectionVisible = () => {
+    const el = document.querySelector("#next-section");
+    if (!el) return false;
+    const opacity = parseFloat(getComputedStyle(el).opacity ?? "0");
+    return opacity > 0.3;
+  };
+
+  const detectActiveSection = useCallback(() => {
+    if (lockRef.current) return;
+
+    // ① next-section(KeywordSection 마지막) 보이는 중 → WORK / light
+    if (isNextSectionVisible()) {
+      setActiveId("work-container");
+      setHeaderBg("#FEE9CE");
+      setHeaderTheme("light");
       return;
     }
 
-    setActiveId(id);
-    setMenuOpen(false);
-
-    // 클릭 시 즉시 lock 활성화
-    lockRef.current = true;
-    if (lockTimerRef.current) clearTimeout(lockTimerRef.current);
-
-    // who-i-am-section은 pinned 섹션이므로 정확한 시작 위치로 이동
-    let y;
-    if (id === "who-i-am-section") {
-      const rect = el.getBoundingClientRect();
-      const scrollTop =
-        window.pageYOffset || document.documentElement.scrollTop;
-      y = rect.top + scrollTop - getHeaderOffset();
-    } else {
-      y = el.getBoundingClientRect().top + window.scrollY - getHeaderOffset();
+    // ② horizontal-section(projects-wrapper) pinned 중 → WORK / dark
+    if (inHorizontalRef.current || isHorizontalSectionActive()) {
+      setActiveId("work-container");
+      setHeaderBg("#050505");
+      setHeaderTheme("dark");
+      return;
     }
 
-    // 스크롤 실행
-    window.scrollTo({ top: y, behavior: "smooth" });
+    forcedNavRef.current = null;
 
-    // 스크롤 완료 후 lock 해제
-    lockTimerRef.current = setTimeout(() => {
-      lockRef.current = false;
-    }, 1200);
-  };
+    const scrollTop = window.scrollY;
+    const headerH = getHeaderOffset();
+    const trigger = scrollTop + headerH + 10;
 
-  // 새로고침 시 HERO 섹션으로 스크롤
+    const sections = getSectionMeta();
+    if (sections.length === 0) return;
+
+    let matched = sections[0];
+    for (const sec of sections) {
+      if (trigger >= sec.top) {
+        matched = sec;
+      }
+    }
+
+    setActiveId((prev) => (prev === matched.navId ? prev : matched.navId));
+    if (matched.bg) setHeaderBg(matched.bg);
+    if (matched.theme) setHeaderTheme(matched.theme);
+  }, [getSectionMeta]);
+
+  // scroll 이벤트
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "auto" });
-  }, []);
-  //  GSAP(KeywordSection)에서 헤더 테마 강제 변경 이벤트 받기
+    const onScroll = () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      rafRef.current = requestAnimationFrame(detectActiveSection);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    detectActiveSection();
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [detectActiveSection]);
+
+  // headerThemeChange — Work.jsx의 horizontal-section onEnter/onLeaveBack에서 발행
   useEffect(() => {
     const onTheme = (e) => {
       const { bg, theme } = e.detail || {};
-      lockRef.current = true;
-      if (lockTimerRef.current) clearTimeout(lockTimerRef.current);
-      lockTimerRef.current = setTimeout(() => {
-        lockRef.current = false;
-      }, 700);
-
       if (bg) setHeaderBg(bg);
       if (theme) setHeaderTheme(theme);
     };
-
     window.addEventListener("headerThemeChange", onTheme);
     return () => window.removeEventListener("headerThemeChange", onTheme);
   }, []);
 
-  // 섹션 진입 감지: activeId + header bg/theme 업데이트
+  // horizontalSectionEnter / horizontalSectionLeave 이벤트 (Work.jsx에서 발행)
   useEffect(() => {
-    // 헤더 배경색이 바뀌어야 하는 모든 섹션
-    const sectionSelectors = [
-      "#hero",
-      ".who-i-am-section",
-      "#keyword-section",
-      "#contact",
-      ".work-container",
-      ".hobby-container",
-    ];
-
-    const sections = sectionSelectors
-      .map((selector) => document.querySelector(selector))
-      .filter(Boolean);
-
-    if (sections.length === 0) return;
-
-    const applyFromSection = (sectionEl) => {
-      const bg = sectionEl.dataset.headerBg;
-      const theme = sectionEl.dataset.headerTheme;
-      if (bg) setHeaderBg(bg);
-      if (theme) setHeaderTheme(theme);
+    const onEnter = () => {
+      inHorizontalRef.current = true;
+      setActiveId("work-container");
+      setHeaderBg("#050505");
+      setHeaderTheme("dark");
+    };
+    const onLeave = () => {
+      inHorizontalRef.current = false;
+      // scroll 감지가 바로 다음 프레임에 올바른 섹션으로 복원
     };
 
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (lockRef.current) return;
-
-        // 화면에 보이는 모든 섹션 찾기
-        const visibleSections = entries
-          .filter((e) => e.isIntersecting)
-          .map((e) => ({
-            el: e.target,
-            ratio: e.intersectionRatio ?? 0,
-            top: e.boundingClientRect?.top ?? 999999,
-            opacity: parseFloat(getComputedStyle(e.target).opacity || "1"),
-          }))
-          .filter((s) => s.opacity > 0.6) // ✅ next-section이 opacity 0~0.5면 무시
-          .sort((a, b) => a.top - b.top);
-
-        // 가장 위에 있는 섹션의 테마 적용
-        const topSection = visibleSections[0];
-
-        if (topSection?.el) {
-          // activeId 업데이트
-          if (topSection.el.id) {
-            setActiveId((prev) =>
-              prev === topSection.id ? prev : topSection.id,
-            );
-          } else if (topSection.el.classList.contains("who-i-am-section")) {
-            setActiveId("who-i-am-section");
-          } else if (topSection.el.classList.contains("work-container")) {
-            setActiveId("work-container");
-          } else if (topSection.el.classList.contains("hobby-container")) {
-            setActiveId("hobby-container");
-          }
-
-          // 헤더 테마 적용
-          applyFromSection(topSection.el);
-        }
-      },
-      {
-        threshold: [0, 0.1, 0.2, 0.3, 0.5],
-        rootMargin: `-${getHeaderOffset()}px 0px -40% 0px`,
-      },
-    );
-
-    sections.forEach((s) => io.observe(s));
-
-    // 첫 렌더 시 hero 기준 적용
-    const first = document.getElementById("hero");
-    if (first) applyFromSection(first);
-
-    return () => io.disconnect();
+    window.addEventListener("horizontalSectionEnter", onEnter);
+    window.addEventListener("horizontalSectionLeave", onLeave);
+    return () => {
+      window.removeEventListener("horizontalSectionEnter", onEnter);
+      window.removeEventListener("horizontalSectionLeave", onLeave);
+    };
   }, []);
 
-  // 메뉴 열렸을 때 body 스크롤 잠그기
+  // forceActiveNav
+  useEffect(() => {
+    const onForceActive = (e) => {
+      const { id } = e.detail || {};
+      if (!id) return;
+      forcedNavRef.current = id;
+      setActiveId(id);
+    };
+    window.addEventListener("forceActiveNav", onForceActive);
+    return () => window.removeEventListener("forceActiveNav", onForceActive);
+  }, []);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }, []);
+
   useEffect(() => {
     const prev = document.body.style.overflow;
     if (menuOpen) document.body.style.overflow = "hidden";
@@ -189,6 +209,42 @@ export default function Header() {
     };
   }, []);
 
+  const scrollToId = (id) => {
+    let el;
+    if (
+      id === "who-i-am-section" ||
+      id === "work-container" ||
+      id === "hobby-container"
+    ) {
+      el = document.querySelector(`.${id}`);
+    } else {
+      el = document.getElementById(id);
+    }
+    if (!el) return;
+
+    setActiveId(id);
+    setMenuOpen(false);
+    forcedNavRef.current = null;
+    inHorizontalRef.current = false;
+
+    lockRef.current = true;
+    if (lockTimerRef.current) clearTimeout(lockTimerRef.current);
+
+    const scrollTop = window.scrollY;
+    const parentSpacer = el.parentElement?.classList?.contains("pin-spacer")
+      ? el.parentElement
+      : null;
+    const targetEl = parentSpacer || el;
+    const targetRect = targetEl.getBoundingClientRect();
+    const y = targetRect.top + scrollTop - getHeaderOffset();
+
+    window.scrollTo({ top: y, behavior: "smooth" });
+
+    lockTimerRef.current = setTimeout(() => {
+      lockRef.current = false;
+    }, 1200);
+  };
+
   return (
     <header
       className={`header ${headerTheme === "light" ? "themeLight" : "themeDark"}`}
@@ -202,11 +258,7 @@ export default function Header() {
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((v) => !v)}
         >
-          <img
-            src={menuOpen ? "/image/menu-icon.png" : "/image/menu-icon.png"}
-            alt=""
-            className="menuIcon"
-          />
+          <img src="/image/menu-icon.png" alt="" className="menuIcon" />
         </button>
 
         <nav className="centerNav" aria-label="Primary">
@@ -263,7 +315,6 @@ export default function Header() {
             CONTACT
           </button>
         </div>
-
         <button
           className="menuDim"
           aria-label="Close menu"

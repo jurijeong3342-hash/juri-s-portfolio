@@ -121,11 +121,24 @@ export default function KeywordSection() {
                 detail: { bg: "#FEE9CE", theme: "light" },
               }),
             );
+
+            // ✅ WORK 활성화
+            window.dispatchEvent(
+              new CustomEvent("forceActiveNav", {
+                detail: { id: "work-container" },
+              }),
+            );
           },
+
           onReverseComplete: () => {
             window.dispatchEvent(
               new CustomEvent("headerThemeChange", {
                 detail: { bg: "#050505", theme: "dark" },
+              }),
+            );
+            window.dispatchEvent(
+              new CustomEvent("forceActiveNav", {
+                detail: { id: "who-i-am-section" },
               }),
             );
           },
@@ -186,7 +199,6 @@ export default function KeywordSection() {
           </h1>
         ))}
       </div>
-
       {/* 다음 섹션 */}
       <div
         id="next-section"
@@ -194,8 +206,7 @@ export default function KeywordSection() {
         ref={nextSectionRef}
         data-header-bg="#FEE9CE"
         data-header-theme="light"
-      ></div>
-      <div id="next-section" className="next-section" ref={nextSectionRef}>
+      >
         <h2>
           {textLines.map((line, index) => (
             <span
@@ -208,7 +219,7 @@ export default function KeywordSection() {
             </span>
           ))}
         </h2>
-      </div>
+      </div>{" "}
     </section>
   );
 }

@@ -25,7 +25,7 @@ const staggerLines = (delay = 0, dir = 1) => ({
 
 export default function Hero() {
   const left = staggerLines(0.05, 1); // 아래→위
-  const right = staggerLines(0.18, -1); // 위→아래
+  const right = staggerLines(0.05, -1); // 위→아래
 
   return (
     <section
@@ -58,7 +58,7 @@ export default function Hero() {
             variants={{
               hidden: {},
               show: {
-                transition: { staggerChildren: 0.08, delayChildren: 0.22 },
+                transition: { staggerChildren: 0.08 },
               },
             }}
           >

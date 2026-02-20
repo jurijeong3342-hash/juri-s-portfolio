@@ -44,8 +44,7 @@ const Work = () => {
       // text-left 글자 채우기 애니메이션
       if (textLeftRef.current) {
         const lines = textLeftRef.current.querySelectorAll(".text-line");
-
-        lines.forEach((line, index) => {
+        lines.forEach((line) => {
           gsap.fromTo(
             line,
             {
@@ -72,8 +71,7 @@ const Work = () => {
       // text-right 글자 채우기 애니메이션
       if (textRightRef.current) {
         const lines = textRightRef.current.querySelectorAll(".text-line");
-
-        lines.forEach((line, index) => {
+        lines.forEach((line) => {
           gsap.fromTo(
             line,
             {
@@ -97,20 +95,42 @@ const Work = () => {
         });
       }
 
-      // ✅ horizontal-section 진입/이탈 시 헤더 테마 강제 변경
+      // horizontal-section 진입/이탈 시 헤더 테마 + 전용 이벤트 발행
       if (horizontalSectionRef.current) {
         ScrollTrigger.create({
           trigger: horizontalSectionRef.current,
           start: "top top",
           end: "bottom top",
+
           onEnter: () => {
+            // headerThemeChange: 배경·테마 변경
             window.dispatchEvent(
               new CustomEvent("headerThemeChange", {
                 detail: { bg: "#050505", theme: "dark" },
               }),
             );
+            // horizontalSectionEnter: Header가 inHorizontalRef를 true로 설정
+            window.dispatchEvent(new CustomEvent("horizontalSectionEnter"));
           },
+
+          onLeave: () => {
+            // 가로 스크롤 끝나고 아래 섹션으로 넘어갈 때
+            window.dispatchEvent(new CustomEvent("horizontalSectionLeave"));
+          },
+
+          onEnterBack: () => {
+            // 역스크롤로 horizontal-section 재진입
+            window.dispatchEvent(
+              new CustomEvent("headerThemeChange", {
+                detail: { bg: "#050505", theme: "dark" },
+              }),
+            );
+            window.dispatchEvent(new CustomEvent("horizontalSectionEnter"));
+          },
+
           onLeaveBack: () => {
+            // 역스크롤로 horizontal-section 이탈 → work-container 상단(light)으로
+            window.dispatchEvent(new CustomEvent("horizontalSectionLeave"));
             window.dispatchEvent(
               new CustomEvent("headerThemeChange", {
                 detail: { bg: "#FEE9CE", theme: "light" },
@@ -154,11 +174,11 @@ const Work = () => {
   ];
 
   const bottomImages = [
-    "/image/marquee_1.png",
-    "/image/marquee_2.png",
-    "/image/marquee_3.png",
-    "/image/marquee_4.png",
-    "/image/marquee_5.png",
+    "/image/marquee_6.png",
+    "/image/marquee_7.png",
+    "/image/marquee_8.png",
+    "/image/marquee_9.png",
+    "/image/marquee_10.png",
   ];
 
   const projectsData = [
@@ -256,6 +276,7 @@ const Work = () => {
       <section className="header-section">
         <h1 className="work-title">WORK</h1>
       </section>
+
       <section className="diagonal-strips-section">
         <div ref={topStripRef} className="image-strip top-strip">
           {[...Array(4)].map((_, repeatIndex) => (
@@ -284,7 +305,6 @@ const Work = () => {
               </span>
             ))}
           </p>
-
           <p className="text-right" ref={textRightRef}>
             {textRightLines.map((line, index) => (
               <span
@@ -301,35 +321,31 @@ const Work = () => {
         <div ref={bottomStripRef} className="image-strip bottom-strip">
           {[...Array(4)].map((_, repeatIndex) => (
             <div key={repeatIndex} className="strip-group">
-              {bottomImages.map((src, index) => {
-                const uniqueNumber = repeatIndex * 5 + index + 1;
-                return (
-                  <div
-                    key={`bottom-${repeatIndex}-${index}`}
-                    className="strip-image"
-                  >
-                    <img src={src} alt={`Bottom ${index + 1}`} />
-                  </div>
-                );
-              })}
+              {bottomImages.map((src, index) => (
+                <div
+                  key={`bottom-${repeatIndex}-${index}`}
+                  className="strip-image"
+                >
+                  <img src={src} alt={`Bottom ${index + 1}`} />
+                </div>
+              ))}
             </div>
           ))}
         </div>
       </section>
+
       <section
         ref={horizontalSectionRef}
         className="horizontal-section"
         data-header-bg="#050505"
         data-header-theme="dark"
       >
-        {" "}
         <div
           className="projects-wrapper"
           data-header-bg="#050505"
           data-header-theme="dark"
         >
           {projectsData.map((item, index) => {
-            // ✅ 1) Cover 카드
             if (item.kind === "cover") {
               return (
                 <div
@@ -344,7 +360,6 @@ const Work = () => {
               );
             }
 
-            // ✅ 2) 기존 Project 카드 (그대로)
             return (
               <div key={`${item.name}-${index}`} className="project-card">
                 <div className="project-content">
@@ -364,7 +379,6 @@ const Work = () => {
                       <button className="btn-outline">VIEW PROTOTYPE</button>
                     </div>
                   </div>
-
                   <div className="project-image">
                     <img src={item.image} alt={item.name} />
                   </div>
@@ -373,7 +387,7 @@ const Work = () => {
             );
           })}
         </div>
-      </section>{" "}
+      </section>
     </div>
   );
 };

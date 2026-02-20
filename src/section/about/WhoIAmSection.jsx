@@ -60,15 +60,15 @@ export default function WhoIAmSection() {
       )
 
       // 3단계: 중앙 축소 + 상단 이동
-// 3단계: 중앙 축소 + 상단 이동
-.to(text2Ref.current, {
-fontSize: "clamp(20px, 5vw, 26px)",
-  letterSpacing: "-0.02em",    // 👈 자간 조정 추가
-  y: 50,              // 👈 y값으로 상하 위치 조정 (음수: 위로, 양수: 아래로)
-  top: "80px",          // 👈 top값으로 절대 위치 조정
-  duration: 1,
-  ease: "power2.out",
-})
+      // 3단계: 중앙 축소 + 상단 이동
+      .to(text2Ref.current, {
+        fontSize: "clamp(20px, 5vw, 26px)",
+        letterSpacing: "-0.02em", // 👈 자간 조정 추가
+        y: 50, // 👈 y값으로 상하 위치 조정 (음수: 위로, 양수: 아래로)
+        top: "80px", // 👈 top값으로 절대 위치 조정
+        duration: 1,
+        ease: "power2.out",
+      })
       // 4단계: WHO I AM 축소된 상태로 유지
 
       // 키워드 나오기 전 Next Scene 등장

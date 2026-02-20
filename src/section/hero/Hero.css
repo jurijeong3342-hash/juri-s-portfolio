@@ -1,13 +1,20 @@
+:root {
+  --header-h: 72px;
+}
+
 .hero.hero--portfolio {
   position: relative;
-  min-height: 100vh;
+  min-height: 100dvh;
+  padding-top: var(--header-h);
   background: #050505;
   color: #fff3e2;
   overflow: hidden;
+  padding-top: var(--header-h);
 }
 
 .hero--portfolio .hero__inner {
-  width: 90%;
+  width: 100%;
+  max-width: 1600px;
   margin: 0 auto;
   min-height: 100vh;
   display: grid;
@@ -16,28 +23,32 @@
 
 .hero--portfolio .hero__layout {
   width: 100%;
-  display: grid; /* ✅ 이거 없어서 지금 세로로 쌓인거 */
-  grid-template-columns: 1.1fr 1fr; /* ✅ 왼쪽/오른쪽 2컬럼 */
-  align-items: center;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  align-items: stretch;
   column-gap: clamp(40px, 6vw, 110px);
-  min-height: 70vh;
+  min-height: calc(100dvh - var(--header-h) - 5vh);
 }
 
 .hero--portfolio .hero__left {
   align-self: start;
-  padding-top: 40px;
 }
 
 .hero--portfolio .hero__meta {
   display: inline-flex;
   align-items: center;
-  gap: 22px; /* 도트 ↔ INTO 간격 */
+  gap: 22px;
 }
 
 .hero--portfolio .hero__right {
   align-self: end;
-  padding-bottom: 80px;
   text-align: left;
+  padding-bottom: 6vh;
+}
+
+.hero--portfolio .hero__left,
+.hero--portfolio .hero__right {
+  min-width: 0;
 }
 
 /* 타이포 기본 */
