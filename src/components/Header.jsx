@@ -103,13 +103,17 @@ export default function Header() {
     }
 
     // ② horizontal-section(projects-wrapper) pinned 중 → WORK / dark
-    if (inHorizontalRef.current || isHorizontalSectionActive()) {
-      setActiveId("work-container");
-      setHeaderBg("#050505");
-      setHeaderTheme("dark");
-      return;
-    }
+// inHorizontalRef가 true면 scroll 감지가 덮어쓰지 못하게 early return
+  if (inHorizontalRef.current) {
+    return; // ← 이미 onEnter에서 dark로 설정했으므로 그대로 유지
+  }
 
+  if (isHorizontalSectionActive()) {
+    setActiveId("work-container");
+    setHeaderBg("#050505");
+    setHeaderTheme("dark");
+    return;
+  }
     forcedNavRef.current = null;
 
     const scrollTop = window.scrollY;

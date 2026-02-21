@@ -192,28 +192,31 @@
   color: #fee9ce;
   text-align: left;
   font-family: Inter;
-  font-size: 22px;
+  font-size: 18px;
   font-style: normal;
   font-weight: 400;
   line-height: 100%;
   letter-spacing: -0.02em;
   text-transform: uppercase;
-  margin-bottom: 24px;
+  margin-bottom: 5px;
 }
 
 .work-project-name {
   color: #fee9ce;
-  font-size: 80px;
+  font-size: 70px;
   font-weight: 700;
-  margin-bottom: 60px;
+  margin-bottom: 40px;
   letter-spacing: -0.02em;
 }
 
 .project-description {
+  max-width: 500px;
   color: #fee9ce;
-  font-size: 26px;
-  line-height: 1.8;
-  margin-bottom: 80px;
+  font-size: 22px;
+  line-height: 1.5;
+  margin-bottom: 40px;
+  word-break: keep-all;
+
 }
 
 .project-buttons {
@@ -227,16 +230,20 @@
   border-radius: 30px;
   border: 1px solid #fee9ce;
   color: #fee9ce;
-  font-size: 22px;
+  font-size: 18px;
   letter-spacing: -0.02em;
   cursor: pointer;
   transition: all 0.3s ease;
   font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
 }
 
 .btn-outline:hover {
   background: #fee9ce;
-  color: #1a1a1a;
+  color: #050505;
 }
 
 .project-image {

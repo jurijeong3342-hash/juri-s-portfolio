@@ -99,7 +99,7 @@ const Work = () => {
       if (horizontalSectionRef.current) {
         ScrollTrigger.create({
           trigger: horizontalSectionRef.current,
-          start: "top top",
+          start: "top 80%",
           end: "bottom top",
 
           onEnter: () => {
@@ -187,70 +187,59 @@ const Work = () => {
       eyebrow: "TEAM & PERSONAL",
       title: "PROJECT",
     },
-    {
-      type: "TEAM PROJECT",
-      name: "DUGOUT",
-      description: `덕아웃은 야구 관람 경험을 참여형 서비스로 확장한
-      팀 프로젝트입니다.
-      기획 단계부터 사용자 시나리오, UX 구조 설계까지
-      팀 내 협업을 통해 진행했으며, 역할 간 조율과 구조
-      설계를 중심으로 기획 및 인터랙션을 구현했습니다.`,
-      image: "/image/project_1.png",
-      link: "https://your-dugout-link.com",
-    },
-    {
-      type: "TEAM PROJECT",
-      name: "MONAMI",
-      description: `모나미 웹 리뉴얼은 브랜드 정체성을
-      디지털 경험으로 재구성한 팀 프로젝트입니다.
-      기존 사이트의 구조와 사용자 흐름을 분석하고,
-      브랜드 메시지가 명확히 전달되도록 UX 구조를
-      재설계했습니다. 기획 단계에서 정보 구조와
-      화면 흐름을 중심을 고려한 설계를 진행했습니다.`,
-      image: "/image/marquee_3.png",
-    },
-    {
-      type: "PERSONAL PROJECT",
-      name: "MASHIL",
-      description: `마실은 단순 정보 검색이 아닌,
-      사용자 중심 흐름으로 재구성한 개인 프로젝트입니다.
-      취향과 맥락을 고려한 정보 구조 설계와 인터랙션을 통해
-      탐색의 부담을 줄이고, 겸험의 밀도를 높이고자 했습니다.
-      기획, UX 구조 설계, UI 디자인, React 기반 구현까지
-      전 과정을 일관된 방향성으로 완성한 공간 탐색 서비스입니다.`,
-      image: "/image/marquee_7.png",
-    },
-    {
-      type: "INTERNAL PROJECT",
-      name: "DriveOps",
-      description: `회사 내부 운영 효율화를 목적으로
-      법인차량 관리 시스템을 신규 기획한 프로젝트입니다.
-      차량 신청, 운영 기록, 정비 이력 등 운영에 필요한
-      기능을 정의하고 역할별 사용 흐름을 설계했습니다. 
-      실제 업무 환경을 고려해 정보 구조와 기능 우선순위를
-      정리한 내부 운영 중심 시스템 기획 경헙니다.`,
-      image: "/image/project_driver.png",
-    },
-    {
-      type: "INTERNAL PROJECT",
-      name: "PUPPY PAN",
-      description: `퍼피판은 반려견의 일상 관리 기능과 커뮤니티 참여 구조를
-      결합한 반려 라이프 플랫폼입니다. 기록 기반 기능 설계를 통해
-      보호자가 반려견의 건강과 생활을 지속적으로 관리할 수 있도록
-      UX 흐름을 구성했습니다.사용자 활동 데이터를 기반으로 지역
-      정보를 연결하는 확장 구조까지 고려해 설계했습니다.`,
-      image: "/image/project_puppy.png",
-    },
-    {
-      type: "INTERNAL PROJECT",
-      name: "COMMUNITY SITE",
-      description: `사용자(Web·Mobile)와 운영자(Staff) 권한을 분리하여
-      설계한 커뮤니티 플랫폼입니다. 콘텐츠 작성, 관리, 신고 및
-      운영 기능을 역할 기반 구조로 정의해 효율적인 운영 흐름을
-      기획했습니다. 플랫폼 구조와 권한 체계를 고려한 정보 구조
-      설계 중심의 프로젝트입니다.`,
-      image: "/image/project_cms.png",
-    },
+{
+  type: "TEAM PROJECT",
+  name: "DUGOUT",
+  description: `덕아웃은 야구 관람 경험을 참여형 서비스로 확장한 팀 프로젝트입니다. 기획 단계부터 사용자 시나리오와 UX 구조 설계까지 협업을 통해 진행했으며, 역할 간 조율과 구조 설계를 중심으로 기획과 인터랙션을 구현했습니다.`,
+  image: "/image/project-1.png",
+  caseStudyLink: "https://www.figma.com/proto/nSuzgw6WEP8UerDSyoMTHK/2%EC%B0%A8%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8_1%EC%A1%B0?page-id=4908%3A5891&node-id=4908-5897&viewport=416%2C330%2C0.02&t=4gns7P3zAo2coQ9B-1&scaling=scale-down-width&content-scaling=fixed",
+  liveLink: "https://실제사이트링크.com"
+},
+
+{
+  type: "TEAM PROJECT",
+  name: "MONAMI",
+  description: `모나미 웹 리뉴얼은 브랜드 정체성을 디지털 경험으로 재구성한 팀 프로젝트입니다. 기존 사이트 구조와 사용자 흐름을 분석하고, 브랜드 메시지가 명확히 전달되도록 UX 구조를 재설계했습니다.`,
+  image: "/image/project-2.png",
+  caseStudyLink: "https://www.figma.com/proto/KTsLouDaCW93ePlDFLe27N/K-Brand-1%EC%A1%B0?page-id=6643%3A793&node-id=6758-3622&viewport=-7577%2C-148%2C0.28&t=vgcadWEHwQ3g5ct7-1&scaling=min-zoom&content-scaling=fixed",
+  liveLink: "https://실제사이트링크.com"
+},
+
+{
+  type: "PERSONAL PROJECT",
+  name: "MASHIL",
+  description: `마실은 단순 정보 검색을 넘어 사용자 중심 흐름으로 재구성한 개인 프로젝트입니다. 취향과 맥락을 반영한 정보 구조와 인터랙션 설계를 통해 탐색 부담을 줄이고 경험의 밀도를 높이고자 했습니다. 기획부터 구현까지 전 과정을 일관된 방향성으로 완성했습니다.`,
+  image: "/image/project-3.png",
+  caseStudyLink: "https://figma.com/너기획서링크",
+  liveLink: "https://실제사이트링크.com"
+},
+
+{
+  type: "INTERNAL PROJECT",
+  name: "DriveOps",
+  description: `회사 내부 운영 효율화를 위해 법인 차량 관리 시스템을 신규 기획한 프로젝트입니다. 차량 신청, 운영 기록, 정비 이력 등 핵심 기능을 정의하고 역할별 사용 흐름을 설계했습니다. 실제 업무 환경을 반영한 정보 구조 중심의 내부 운영 시스템입니다.`,
+  image: "/image/project-4.png",
+  caseStudyLink: "https://figma.com/너기획서링크",
+  liveLink: "https://실제사이트링크.com"
+},
+
+{
+  type: "INTERNAL PROJECT",
+  name: "PUPPY PAN",
+  description: `퍼피판은 반려견의 일상 관리 기능과 커뮤니티 참여 구조를 결합한 반려 라이프 플랫폼입니다. 기록 기반 기능 설계를 통해 보호자가 건강과 생활을 지속적으로 관리할 수 있는 UX 흐름을 구축했습니다. 사용자 활동 데이터를 기반으로 지역 정보를 연결하는 확장 구조까지 고려했습니다.`,
+  image: "/image/project-5.png",
+  caseStudyLink: "https://figma.com/너기획서링크",
+  liveLink: "https://실제사이트링크.com"
+},
+
+{
+  type: "INTERNAL PROJECT",
+  name: "COMMUNITY SITE",
+  description: `사용자(Web·Mobile)와 운영자(Staff) 권한을 분리해 설계한 커뮤니티 플랫폼입니다. 콘텐츠 작성과 관리, 신고 및 운영 기능을 역할 기반 구조로 정의해 효율적인 운영 흐름을 기획했습니다. 플랫폼 구조와 권한 체계를 반영한 정보 구조 설계 중심 프로젝트입니다.`,
+  image: "/image/project-6.png",
+  caseStudyLink: "https://figma.com/너기획서링크",
+  liveLink: "https://실제사이트링크.com"
+},
   ];
 
   const textLeftLines = [
@@ -374,11 +363,25 @@ const Work = () => {
                         </span>
                       ))}
                     </p>
-                    <div className="project-buttons">
-                      <button className="btn-outline">VIEW PROJECT</button>
-                      <button className="btn-outline">VIEW PROTOTYPE</button>
-                    </div>
-                  </div>
+<div className="project-buttons">
+  <a
+    href={item.caseStudyLink}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="btn-outline"
+  >
+    VIEW CASE STUDY
+  </a>
+
+  <a
+    href={item.liveLink}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="btn-outline"
+  >
+    EXPLORE LIVE SERVICE
+  </a>
+</div>                    </div>
                   <div className="project-image">
                     <img src={item.image} alt={item.name} />
                   </div>
