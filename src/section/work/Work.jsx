@@ -193,7 +193,7 @@ const Work = () => {
   description: `덕아웃은 야구 관람 경험을 참여형 서비스로 확장한 팀 프로젝트입니다. 기획 단계부터 사용자 시나리오와 UX 구조 설계까지 협업을 통해 진행했으며, 역할 간 조율과 구조 설계를 중심으로 기획과 인터랙션을 구현했습니다.`,
   image: "/image/project-1.png",
   caseStudyLink: "https://www.figma.com/proto/nSuzgw6WEP8UerDSyoMTHK/2%EC%B0%A8%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8_1%EC%A1%B0?page-id=4908%3A5891&node-id=4908-5897&viewport=416%2C330%2C0.02&t=4gns7P3zAo2coQ9B-1&scaling=scale-down-width&content-scaling=fixed",
-  liveLink: "https://실제사이트링크.com"
+  liveLink: "dugout-pink.vercel.app"
 },
 
 {
@@ -202,7 +202,7 @@ const Work = () => {
   description: `모나미 웹 리뉴얼은 브랜드 정체성을 디지털 경험으로 재구성한 팀 프로젝트입니다. 기존 사이트 구조와 사용자 흐름을 분석하고, 브랜드 메시지가 명확히 전달되도록 UX 구조를 재설계했습니다.`,
   image: "/image/project-2.png",
   caseStudyLink: "https://www.figma.com/proto/KTsLouDaCW93ePlDFLe27N/K-Brand-1%EC%A1%B0?page-id=6643%3A793&node-id=6758-3622&viewport=-7577%2C-148%2C0.28&t=vgcadWEHwQ3g5ct7-1&scaling=min-zoom&content-scaling=fixed",
-  liveLink: "https://실제사이트링크.com"
+  liveLink: "https://meongpunch.github.io/monamifinal/"
 },
 
 {

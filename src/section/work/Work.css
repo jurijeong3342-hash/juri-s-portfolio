@@ -1,3 +1,6 @@
+/* =========================
+   Reset (이 파일만 적용되면 OK)
+   ========================= */
 * {
   margin: 0;
   padding: 0;
@@ -7,67 +10,73 @@
 .work-container {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   overflow-x: hidden;
-  background: #f5e6d3;
+  background: #fee9ce; /* header/bg 톤 통일 */
 }
 
-/* 헤더 섹션 */
+/* =========================
+   Header section
+   ========================= */
 .header-section {
-  height: 20vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  height: clamp(120px, 20vh, 220px);
+  display: grid;
+  place-items: center;
   background: #fee9ce;
 }
 
 .work-title {
-  font-size: 30px;
+  font-size: clamp(22px, 2.4vw, 30px);
   font-weight: 600;
   color: #ef5143;
   letter-spacing: -0.02em;
 }
 
-/* 대각선 이미지 띠 섹션 */
+/* =========================
+   Diagonal strips section
+   ========================= */
 .diagonal-strips-section {
-  min-height: 135vh;
+  min-height: clamp(820px, 135vh, 1400px);
   background: #fee9ce;
   position: relative;
-  padding: 0;
+  overflow: hidden;
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
+/* strips */
 .image-strip {
   position: relative;
   display: flex;
   transform: rotate(-4deg);
   will-change: transform;
-  gap: 20px;
+  gap: clamp(12px, 1.6vw, 20px);
 }
 
 .strip-group {
   display: flex;
-  gap: 20px;
+  gap: clamp(12px, 1.6vw, 20px);
 }
 
 .top-strip {
-  margin-top: 5vh;
-  left: -25%;
-  width: auto;
+  margin-top: clamp(20px, 5vh, 60px);
+  left: clamp(-40%, -25vw, -25%);
+  width: max-content;
 }
 
 .bottom-strip {
-  margin-bottom: 20vh;
-  left: -32%;
-  width: auto;
+  margin-bottom: clamp(80px, 20vh, 220px);
+  left: clamp(-50%, -30vw, -32%);
+  width: max-content;
 }
 
 .strip-image {
   position: relative;
-  width: 440px;
-  height: 260px;
-  flex-shrink: 0;
+  width: clamp(220px, 28vw, 440px);
+  height: clamp(140px, 16vw, 260px);
+  flex: 0 0 auto;
   overflow: hidden;
+  border-radius: 10px;
 }
 
 .strip-image img {
@@ -77,51 +86,50 @@
   display: block;
 }
 
-.image-label {
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
-  color: white;
-  font-size: 32px;
-  font-weight: 700;
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
-  letter-spacing: 2px;
-}
-
-/* 텍스트 박스 컨테이너 */
+/* =========================
+   Text box (between strips)
+   ========================= */
 .text-box {
-  width: 74%;
+  width: min(74%, 1200px);
   margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: clamp(18px, 3vw, 44px);
   align-items: center;
   z-index: 5;
-  flex: 1;
-  max-height: 40vh;
+
+  /* ✅ 모바일에서 잘림 방지 */
+  max-height: none;
+  padding: clamp(10px, 2vh, 24px) 0;
 }
 
-/* 왼쪽 텍스트 */
 .text-left {
-  max-width: 60%;
-  font-size: 34px;
-  line-height: 1.4;
+  font-size: clamp(16px, 1.7vw, 34px);
+  line-height: 1.45;
   color: #070707;
   font-weight: 500;
   text-align: left;
   letter-spacing: -0.02em;
+  word-break: keep-all;
 }
 
 .text-right {
-  margin-bottom: 100px;
-  font-size: 16px;
+  font-size: clamp(12px, 0.95vw, 16px);
   line-height: 1.8;
   color: #d84315;
   border-top: 1px solid #d84315;
   font-weight: 500;
   letter-spacing: 0.5px;
   text-align: left;
+
+  /* 기존 margin-bottom:100px → 화면 비율 따라 유연하게 */
+  padding-top: 10px;
+  margin-bottom: clamp(0px, 8vh, 100px);
 }
 
+/* =========================
+   Horizontal section
+   ========================= */
 .horizontal-section {
   height: 100vh;
   background: #1a1a1a;
@@ -136,6 +144,7 @@
   width: max-content;
 }
 
+/* cover card */
 .project-card--cover {
   display: grid;
   place-items: center;
@@ -151,7 +160,7 @@
 }
 
 .cover-eyebrow {
-  font-size: clamp(56px, 6vw, 137px);
+  font-size: clamp(42px, 6vw, 137px);
   font-weight: 600;
   letter-spacing: -0.02em;
   line-height: 0.9;
@@ -164,73 +173,70 @@
   line-height: 1;
 }
 
+/* normal project card */
 .project-card {
   flex: 0 0 100vw;
   width: 100vw;
   height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-items: center;
   background: #1a1a1a;
-  padding: 80px;
+  padding: clamp(20px, 5vw, 80px);
 }
 
 .project-content {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   align-items: center;
   justify-content: space-between;
-  max-width: 1920px;
-  width: 80%;
-  gap: 30px;
+  width: min(86%, 1400px);
+  gap: clamp(18px, 3vw, 40px);
 }
 
 .project-info {
-  flex: 1;
+  min-width: 0;
 }
 
 .project-category {
   color: #fee9ce;
-  text-align: left;
-  font-family: Inter;
-  font-size: 18px;
-  font-style: normal;
+  font-size: clamp(12px, 1vw, 18px);
   font-weight: 400;
-  line-height: 100%;
+  line-height: 1;
   letter-spacing: -0.02em;
   text-transform: uppercase;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
 }
 
 .work-project-name {
   color: #fee9ce;
-  font-size: 70px;
+  font-size: clamp(34px, 4.2vw, 70px);
   font-weight: 700;
-  margin-bottom: 40px;
+  margin-bottom: clamp(18px, 3vh, 40px);
   letter-spacing: -0.02em;
 }
 
 .project-description {
-  max-width: 500px;
+  max-width: 520px;
   color: #fee9ce;
-  font-size: 22px;
-  line-height: 1.5;
-  margin-bottom: 40px;
+  font-size: clamp(14px, 1.35vw, 22px);
+  line-height: 1.55;
+  margin-bottom: clamp(18px, 3vh, 40px);
   word-break: keep-all;
-
 }
 
 .project-buttons {
   display: flex;
-  gap: 20px;
+  gap: 14px;
+  flex-wrap: wrap;
 }
 
 .btn-outline {
-  padding: 14px 24px;
+  padding: 14px 22px;
   background: transparent;
-  border-radius: 30px;
+  border-radius: 999px;
   border: 1px solid #fee9ce;
   color: #fee9ce;
-  font-size: 18px;
+  font-size: clamp(14px, 1vw, 18px);
   letter-spacing: -0.02em;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -239,6 +245,7 @@
   align-items: center;
   justify-content: center;
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .btn-outline:hover {
@@ -247,79 +254,104 @@
 }
 
 .project-image {
-  flex: 1;
-  max-width: 887px;
-  width: 887px;
+  width: min(887px, 42vw);
+  justify-self: end;
 }
 
 .project-image img {
   width: 100%;
   height: auto;
-  border-radius: 8px;
+  border-radius: 10px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
 }
 
-/* 반응형 */
+/* =========================
+   Responsive
+   ========================= */
+
+/* Tablet */
 @media (max-width: 1024px) {
+  .text-box {
+    width: min(86%, 900px);
+    grid-template-columns: 1fr;
+  }
+  .who-i-am-text {
+    font-size: clamp(72px, 20vmin, 196px);
+    letter-spacing: clamp(2px, 0.1vw, 15px);
+    line-height: 6.75;
+  }
+  
+
+  .text-right {
+    margin-bottom: 0;
+  }
+
   .project-content {
-    flex-direction: column;
-    text-align: center;
+    grid-template-columns: 1fr;
+    width: min(88%, 820px);
   }
 
-  .project-info {
-    align-items: center;
-  }
-
-  .work-project-name {
-    font-size: 48px;
+  .project-image {
+    width: min(720px, 88%);
+    justify-self: start;
   }
 
   .project-buttons {
-    justify-content: center;
+    justify-content: flex-start;
+  }
+
+  .project-description br {
+    display: none;
   }
 }
 
+/* Mobile */
 @media (max-width: 768px) {
-  .work-title {
-    font-size: 32px;
+  .strip-image {
+    width: clamp(160px, 52vw, 240px);
+    height: clamp(110px, 32vw, 160px);
   }
 
-  .strip-image {
-    width: 200px;
-    height: 140px;
+  .text-box {
+    width: min(90%, 640px);
+    gap: 18px;
+    padding: 10px 0 22px;
   }
 
   .text-left,
   .text-right {
-    max-width: 100%;
-    text-align: center;
-  }
-
-  .text-left {
-    font-size: 16px;
-  }
-
-  .text-right {
-    font-size: 12px;
+    text-align: left;
   }
 
   .project-card {
-    padding: 40px 20px;
-  }
-
-  .work-project-name {
-    font-size: 36px;
-  }
-
-  .project-description {
-    font-size: 14px;
+    padding: 28px 18px;
   }
 
   .project-buttons {
     flex-direction: column;
+    align-items: stretch;
   }
 
   .btn-outline {
     width: 100%;
+  }
+
+  .project-image {
+    width: 100%;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 390px) {
+  .work-title {
+    font-size: 20px;
+  }
+
+  .text-left {
+    font-size: 15px;
+  }
+
+  .text-right {
+    font-size: 12px;
   }
 }

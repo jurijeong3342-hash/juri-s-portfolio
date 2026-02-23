@@ -1,7 +1,12 @@
 :root {
   --header-h: 72px;
+  --hero-max: 1600px;
+  --hero-pad: clamp(20px, 6vw, 160px);
 }
 
+/* =========================
+   Base
+   ========================= */
 .hero.hero--portfolio {
   position: relative;
   min-height: 100dvh;
@@ -9,14 +14,15 @@
   background: #050505;
   color: #fff3e2;
   overflow: hidden;
-  padding-top: var(--header-h);
 }
 
 .hero--portfolio .hero__inner {
   width: 100%;
-  max-width: 1600px;
+  max-width: var(--hero-max);
   margin: 0 auto;
-  min-height: 100vh;
+  padding-left: var(--hero-pad);
+  padding-right: var(--hero-pad);
+  min-height: calc(100dvh - var(--header-h));
   display: grid;
   align-items: center;
 }
@@ -25,25 +31,9 @@
   width: 100%;
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-  align-items: stretch;
-  column-gap: clamp(40px, 6vw, 110px);
-  min-height: calc(100dvh - var(--header-h) - 5vh);
-}
-
-.hero--portfolio .hero__left {
-  align-self: start;
-}
-
-.hero--portfolio .hero__meta {
-  display: inline-flex;
-  align-items: center;
-  gap: 22px;
-}
-
-.hero--portfolio .hero__right {
-  align-self: end;
-  text-align: left;
-  padding-bottom: 6vh;
+  column-gap: clamp(32px, 6vw, 110px);
+  min-height: calc(100dvh - var(--header-h));
+  padding: clamp(18px, 4vh, 44px) 0;
 }
 
 .hero--portfolio .hero__left,
@@ -51,8 +41,21 @@
   min-width: 0;
 }
 
-/* 타이포 기본 */
+.hero--portfolio .hero__left {
+  align-self: start;
+}
+
+.hero--portfolio .hero__right {
+  align-self: end;
+  text-align: left;
+  padding-bottom: clamp(16px, 6vh, 60px);
+}
+
+/* =========================
+   Typography
+   ========================= */
 .hero--portfolio .hero__headline {
+  margin: 0;
   font-weight: 800;
   line-height: 0.95;
   letter-spacing: -0.03em;
@@ -69,14 +72,13 @@
 
 .hero--portfolio .hero__headline--right {
   font-size: clamp(56px, 6.5vw, 120px);
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 0.95;
-  margin: 0;
 }
 
-.hero--portfolio .hero__headline--right span {
-  display: block;
+.hero--portfolio .hero__meta {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(12px, 2vw, 22px);
+  margin-bottom: clamp(8px, 1.4vh, 16px);
 }
 
 .hero--portfolio .hero__dot {
@@ -88,17 +90,15 @@
 }
 
 .hero--portfolio .hero__into {
-  position: static;
-  text-align: left;
   font-size: clamp(56px, 6.5vw, 120px);
   font-weight: 800;
   letter-spacing: -0.03em;
 }
 
 .hero--portfolio .hero__sub {
-  margin-top: 28px;
+  margin-top: clamp(14px, 2.2vh, 28px);
   max-width: 460px;
-  font-size: 16px;
+  font-size: clamp(14px, 1.1vw, 16px);
   line-height: 1.6;
   opacity: 0.95;
 }
@@ -129,58 +129,80 @@
   opacity: 0.9;
 }
 
+/* =========================
+   Tablet (<=1024)
+   ========================= */
 @media (max-width: 1024px) {
-  .hero--portfolio .hero__inner {
-    padding: 0 64px;
+  :root {
+    --hero-pad: 64px;
   }
 
   .hero--portfolio .hero__layout {
-    gap: 36px;
-  }
-
-  .hero--portfolio .hero__sub {
-    font-size: 15px;
-  }
-}
-
-@media (max-width: 768px) {
-  .hero--portfolio .hero__layout {
-    grid-template-columns: 1fr;
-    row-gap: 22px;
-    align-items: start;
+    column-gap: 36px;
   }
 
   .hero--portfolio .hero__right {
-    padding-top: 0;
-  }
-
-  .hero--portfolio .hero__dot {
-    position: relative;
-    left: 0;
-    top: 0;
-    margin: 6px 0 10px;
-    width: 14px;
-    height: 14px;
-  }
-
-  .hero--portfolio .hero__into {
-    position: relative;
-    right: auto;
-    top: auto;
-    margin-bottom: 10px;
-  }
-
-  .hero--portfolio .hero__headline--right {
-    padding-top: 0;
+    padding-bottom: clamp(12px, 4vh, 40px);
   }
 }
 
 /* =========================
-   Small Mobile
+   Mobile (<=768)
+   ========================= */
+@media (max-width: 768px) {
+  :root {
+    --hero-pad: 20px;
+  }
+
+  .hero--portfolio .hero__inner {
+    align-items: start;
+    padding-top: 24px;
+    padding-bottom: 40px;
+  }
+
+  .hero--portfolio .hero__layout {
+    grid-template-columns: 1fr;
+    row-gap: 28px;
+    min-height: auto;
+    padding: 0;
+  }
+
+  .hero--portfolio .hero__left,
+  .hero--portfolio .hero__right {
+    align-self: start;
+  }
+
+  /* ✅ Option 2 적용 */
+  .hero--portfolio .hero__headline--left {
+    max-width: 16ch;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+  }
+
+  .hero--portfolio .hero__headline--left,
+  .hero--portfolio .hero__headline--right,
+  .hero--portfolio .hero__into {
+    font-size: clamp(44px, 10vw, 72px);
+  }
+
+  .hero--portfolio .hero__dot {
+    width: 14px;
+    height: 14px;
+  }
+
+  .hero--portfolio .hero__sub {
+    margin-top: 14px;
+    max-width: 34ch;
+  }
+}
+
+/* =========================
+   Small Mobile (<=390)
    ========================= */
 @media (max-width: 390px) {
   .hero--portfolio .hero__headline--left,
-  .hero--portfolio .hero__headline--right {
+  .hero--portfolio .hero__headline--right,
+  .hero--portfolio .hero__into {
     font-size: 42px;
   }
 

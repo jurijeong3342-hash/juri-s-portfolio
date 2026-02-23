@@ -1,37 +1,35 @@
+/* =========================
+   WHO I AM Section (Pinned)
+   ========================= */
 .who-i-am-section {
-  min-height: 100vh;
-  height: 100vh;
   width: 100%;
+  height: 100vh;
+  min-height: 100vh;
   background: #000;
   position: relative;
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-items: center;
 }
 
 /* 초기 3개의 WHO I AM */
 .who-i-am-text {
   position: absolute;
+  inset-inline: 0;
 
-  /* 1920x1080 기준 거의 끝까지 차게 */
+  /* 큰 화면에서 꽉 차고, 작은 화면에서도 안전 */
   font-size: clamp(72px, 35vmin, 520px);
-
-  /* 줄 겹침 방지 + 볼드한 안정감 */
   line-height: 0.75;
-
-  /* 거의 끝까지 밀되 과하지 않게 */
   letter-spacing: clamp(2px, 0.9vw, 14px);
 
   font-weight: 900;
   color: #ffb261;
   white-space: nowrap;
-  width: 100%;
   text-align: center;
 
-  /* 진짜 1~2px 잘림 방지용 안전 여백 */
   padding-inline: clamp(8px, 1.5vw, 32px);
   box-sizing: border-box;
+  will-change: transform, opacity;
 }
 
 .who-i-am-text.top {
@@ -47,122 +45,121 @@
   bottom: 10%;
 }
 
-/* 합쳐진 후 상단 고정 */
+/* (사용 안 하면 지워도 됨) */
 .who-i-am-fixed {
-  position: absolute;
-  top: 100px;
-  left: 50%;
-  transform: translateX(-50%), translateY(-15%);
-  font-size: clamp(30px, 5vw, 60px);
-  font-weight: 700;
-  color: #ffb261;
-  letter-spacing: -2px;
   display: none;
-  z-index: 10;
 }
 
+/* =========================
+   Next Scene Overlay
+   ========================= */
 .whoiamNext {
   position: absolute;
   inset: 0;
   z-index: 10;
   pointer-events: none;
-  /* opacity/y는 GSAP가 제어 */
 }
 
 .whoiamNext__inner {
-  width: min(90%, 2000px);
+  width: min(92%, 1600px);
   height: 100%;
   margin: 0 auto;
   position: relative;
-  padding-top: 40px;
+
+  /* Hero랑 톤 맞춤: 상하 여백 clamp */
+  padding-top: clamp(18px, 4vh, 40px);
+  padding-bottom: clamp(18px, 4vh, 48px);
 }
 
 .whoiamNext__hero {
   position: relative;
-  min-height: 100vh;
-  display: flex;
+  height: 100%;
+  min-height: calc(100vh - clamp(18px, 4vh, 40px));
+  display: grid;
   align-items: center;
-  justify-content: center;
 }
 
+/* 큰 이름 */
 .whoiamNext__name {
   position: absolute;
-  top: 29%;
   left: 50%;
+  top: 28%;
   transform: translate(-50%, -50%);
   width: 100%;
   margin: 0;
+
   font-weight: 800;
   letter-spacing: -0.04em;
   color: #f6e8d5;
-  font-size: clamp(72px, 16vw, 371px);
+
+  font-size: clamp(64px, 16vw, 371px);
   line-height: 0.85;
   text-align: center;
 
   z-index: 0;
   pointer-events: none;
-  white-space: nowrap;
+
+  /* ✅ 모바일 터짐 방지 */
+  white-space: normal;
+  word-break: keep-all;
 }
 
-/* 2열 레이아웃 */
+/* ✅ 레이아웃은 grid로: absolute 최소화 */
 .whoiamNext__layout {
   position: relative;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-}
+  z-index: 2;
 
-.whoiamNext__left {
-  height: 100%;
-  display: flex;
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(260px, 0.9fr) minmax(320px, 1fr);
+  column-gap: clamp(24px, 5vw, 90px);
   align-items: center;
+
+  /* 이름이 위에 있으니 약간 내려서 겹침 방지 */
+  padding-top: clamp(160px, 18vh, 260px);
 }
 
-/* 프로필 이미지 */
+/* 왼쪽 */
+.whoiamNext__left {
+  display: grid;
+  justify-items: start;
+}
+
+/* 프로필 이미지 (absolute 제거하고 흐름에 맞게) */
 .whoiamNext__photo {
-  position: absolute;
-  left: 8%;
-  top: 50%;
-  transform: translateY(-24%);
-  width: 100%;
-  max-width: 35vw;
-  z-index: 4;
+  width: min(420px, 34vw);
 }
 
 .whoiamNext__photo img {
-  width: 85%;
+  width: 100%;
   height: auto;
   display: block;
 }
 
 /* 오른쪽 텍스트 */
 .whoiamNext__right {
-  position: absolute;
-  right: 13%;
-  top: 51%;
-  transform: translateY(-1%);
-  max-width: 60%;
-  justify-self: center;
+  max-width: 720px;
 }
 
+/* 타이포 */
 .whoiamNext__title {
-  margin-bottom: 20px;
+  margin: 0 0 18px;
   font-size: clamp(22px, 2.2vw, 48px);
   line-height: 1.4;
-  font-weight: normal;
+  font-weight: 400;
   color: #ededed;
 }
 
 .whoiamNext__desc {
-  margin-bottom: 64px;
-  font-size: 18px;
+  margin: 0 0 clamp(28px, 5vh, 64px);
+  font-size: clamp(14px, 1.1vw, 18px);
   font-weight: 300;
-  line-height: 1.4;
+  line-height: 1.55;
   color: #fff3e2;
 }
 
 .whoiamNext__toolkitTitle {
-  font-size: 26px;
+  font-size: clamp(18px, 1.4vw, 26px);
   font-weight: 700;
   margin-bottom: 10px;
   color: #fff3e2;
@@ -172,20 +169,91 @@
   list-style: none;
   padding: 0;
   margin: 0;
+
   display: flex;
-  gap: 20px;
+  gap: 14px;
   flex-wrap: wrap;
-  font-size: 20px;
+
+  font-size: clamp(14px, 1.2vw, 20px);
   font-weight: 300;
   color: #fff3e2;
 }
 
-@media (max-width: 768px) {
-  .who-i-am-fixed {
-    top: 60px;
+/* =========================
+   Tablet (<=1024)
+   ========================= */
+@media (max-width: 1024px) {
+  .whoiamNext__inner {
+    width: min(92%, 1200px);
+    .who-i-am-text {
+    font-size: clamp(64px, 26vmin, 360px);
+  }
   }
 
-  .keyword {
-    margin-bottom: 15px;
+  .whoiamNext__layout {
+    grid-template-columns: minmax(220px, 0.9fr) minmax(280px, 1fr);
+    padding-top: clamp(140px, 16vh, 220px);
+  }
+
+  .whoiamNext__photo {
+    width: min(360px, 42vw);
+  }
+}
+
+/* =========================
+   Mobile (<=768)
+   ========================= */
+@media (max-width: 768px) {
+  .who-i-am-text {
+    /* 모바일에서 글자 잘림/과대 방지 */
+    font-size: clamp(56px, 20vmin, 220px);
+    letter-spacing: clamp(1px, 0.6vw, 6px);
+    line-height: 0.8;
+  }
+
+  .whoiamNext__inner {
+    width: min(92%, 720px);
+  }
+
+  .whoiamNext__name {
+    top: 18%;
+    font-size: clamp(52px, 14vw, 140px);
+    line-height: 0.9;
+  }
+
+  .whoiamNext__layout {
+    grid-template-columns: 1fr;
+    row-gap: 22px;
+    padding-top: clamp(120px, 18vh, 170px);
+  }
+
+  .whoiamNext__left {
+    justify-items: center;
+  }
+
+  .whoiamNext__photo {
+    width: min(280px, 70vw);
+  }
+
+  .whoiamNext__right {
+    max-width: 100%;
+  }
+
+  /* 모바일 가독성: 강제 줄바꿈(br) 때문에 들쭉날쭉하면 이걸로 정리 */
+  .whoiamNext__desc br {
+    display: none;
+  }
+}
+
+/* =========================
+   Small Mobile (<=390)
+   ========================= */
+@media (max-width: 390px) {
+  .whoiamNext__name {
+    font-size: clamp(44px, 13vw, 110px);
+  }
+
+  .whoiamNext__photo {
+    width: min(240px, 76vw);
   }
 }

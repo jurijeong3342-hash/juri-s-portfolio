@@ -17,11 +17,11 @@ export default function KeywordSection() {
 
   const keywords = [
     "Planning Thinker",
-    "UX Structrue Builder",
+    "UX Structure Builder",
     "TCode-Aware Planner",
     "Experience Architect",
     "Build-Ready Design",
-    "Product  Solver",
+    "Product Solver",
     "Caffeine Addict",
     "Community Builder",
   ];
